@@ -30,6 +30,7 @@ rule "Prehlada"
 	    	Disease disease = new Disease();
 	    	disease.setDiseaseType(DiseaseType.PREHLADA);
 	    	disease.setChance($c/5.0);
+	    	disease.setNumberOfSymptoms($c);
 	    	System.out.println("Usao u PREHLADA "+ $c/5.0);
 	    	
 	        diseaseList.add(disease);
@@ -55,7 +56,8 @@ rule "Groznica"
     	if($c >= 4){
 	    	Disease disease = new Disease();
 	    	disease.setDiseaseType(DiseaseType.GROZNICA);
-	    	disease.setChance($c/5.0);
+	    	disease.setChance($c/8.0);	    	
+	    	disease.setNumberOfSymptoms($c);
 	    	System.out.println("Usao u GROZNICA "+ $c/8.0);
 	    	
 	        diseaseList.add(disease);
@@ -81,7 +83,8 @@ rule "Upala krajnika"
     	if($c >= 4){
 	    	Disease disease = new Disease();
 	    	disease.setDiseaseType(DiseaseType.UPALA_KRAJNIKA);
-	    	disease.setChance($c/5.0);
+	    	disease.setChance($c/8.0);
+	    	disease.setNumberOfSymptoms($c);
 	    	System.out.println("Usao u UPALA_KRAJNIKA "+ $c/8.0);
 	    	
 	        diseaseList.add(disease);
@@ -106,7 +109,8 @@ rule "Sinusna infekcija"
     	if($c >= 4){
 	    	Disease disease = new Disease();
 	    	disease.setDiseaseType(DiseaseType.SINUSNA_INFEKCIJA);
-	    	disease.setChance($c/5.0);
+	    	disease.setChance(($c+1)/7.0);
+	    	disease.setNumberOfSymptoms($c);
 	    	System.out.println("Usao u SINUSNA_INFEKCIJA "+ ($c+1)/7.0);
 	    	
 	        diseaseList.add(disease);

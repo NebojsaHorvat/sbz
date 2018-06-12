@@ -28,9 +28,23 @@ public class Disease {
 	private long timeStamp;
 	
 	private double chance;
+	
+	private Long numberOfSymptoms;
 
 	public Disease() {}
 	
+	
+	
+	
+
+	public Long getNumberOfSymptoms() {
+		return numberOfSymptoms;
+	}
+
+	public void setNumberOfSymptoms(Long numberOfSymptoms) {
+		this.numberOfSymptoms = numberOfSymptoms;
+	}
+
 	public Long getId() {
 		return id;
 	}
