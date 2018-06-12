@@ -14,7 +14,7 @@ public class PatientServiceImpl implements PatientService{
 	private PatientRepository patientRepository;
 
 	public Patient findOne(Long id) {
-		return patientRepository.findOne(id);
+		return patientRepository.findById(id).get();
 	}
 
 	public List<Patient> findAll() {

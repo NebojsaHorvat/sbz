@@ -28,7 +28,7 @@ public class SampleApp {
         for (String beanName : beanNames) {
             sb.append(beanName + "\n");
         }
-        log.info(sb.toString());
+        //log.info(sb.toString());
 	}
 	
 	@Bean

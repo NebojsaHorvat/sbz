@@ -16,7 +16,7 @@ public class SymptomServiceImpl implements SymptomService{
 	private SymptomRepository symptomRepository;
 	
 	public Symptom findOne(Long id) {
-		return symptomRepository.findOne(id);
+		return symptomRepository.findById(id).get();
 	}
 
 	public List<Symptom> findAll() {

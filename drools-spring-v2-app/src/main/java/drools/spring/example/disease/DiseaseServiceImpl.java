@@ -27,7 +27,7 @@ public class DiseaseServiceImpl implements DiseaseService{
     }
     
 	public Disease findOne(Long id) {
-		return diseaseRepository.findOne(id);
+		return diseaseRepository.findById(id).get();
 	}
 
 	public List<Disease> findAll() {

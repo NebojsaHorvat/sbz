@@ -1,0 +1,12 @@
+06-12 20:52:27 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "DISEASE" not found; SQL statement:
+alter table disease drop constraint FK_co3ie4ndm58k8tadw1qqax78d if exists [42102-183]
+06-12 20:52:27 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "SYMPTOM" not found; SQL statement:
+alter table symptom drop constraint FK_3em8khyc5ofm8r8k4j2vbignw if exists [42102-183]
+06-12 20:53:58 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "DISEASE" not found; SQL statement:
+alter table disease drop constraint FK_co3ie4ndm58k8tadw1qqax78d if exists [42102-183]
+06-12 20:53:58 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "SYMPTOM" not found; SQL statement:
+alter table symptom drop constraint FK_3em8khyc5ofm8r8k4j2vbignw if exists [42102-183]
