@@ -6,5 +6,6 @@ angular.module('diagnostic', [
 	'userAuth',
 	'core.user',
 	'home',
+	'core'
 	
 ]);

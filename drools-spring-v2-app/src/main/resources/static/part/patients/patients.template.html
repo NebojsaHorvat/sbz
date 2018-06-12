@@ -1,0 +1,17 @@
+<h1>Find patient</h1>
+<form class="form-row">
+		<div class="col-md-auto">
+			<div class="form-group input-group">
+				<input type="text"
+					class="form-control"
+					ng-model="$ctrl.search"
+					placeholder="Search {{$ctrl.placeType | lowercase}}s"
+					autofocus/>
+				<div class="input-group-append">
+					<span class="input-group-text">
+						<i class="fas fa-search"></i>
+					</span>
+				</div>
+			</div>
+		</div>
+	</form>

@@ -14,6 +14,11 @@ angular.module('diagnostic')
 				url: '/user-auth',
 				component: 'myUserAuth'
 			})
+			.state({
+				name: 'home.patients',
+				url: 'patients',
+				component: 'myPatients'
+			})
 			
 			.state({
 				name: 'error',
