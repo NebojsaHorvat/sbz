@@ -1,0 +1,31 @@
+<button ng-disabled ="$ctrl.symptomList.length == 0" class = 'btn btn-custom'
+	ng-click="$ctrl.mostLikely()">Najverovatnija bolest</button> &nbsp&nbsp&nbsp
+<button ng-disabled ="$ctrl.symptomList.length == 0" class = 'btn btn-custom'
+	ng-click="$ctrl.mostLikelyList()">Spisak najverovatnijih bolest</button> 
+<h1>Pronadji simptome</h1>
+<form class="form-row">
+	<div class="col-md-auto">
+		<div class="form-group input-group">
+			<input type="text"
+				class="form-control"
+				ng-model="$ctrl.search"
+				placeholder="Search {{$ctrl.placeType | lowercase}}s"
+				autofocus/>
+			<div class="input-group-append">
+				<span class="input-group-text">
+					<i class="fas fa-search"></i>
+				</span>
+			</div>
+		</div>
+	</div>
+</form> 
+
+<div class="row no-gutters align-items-stretch">
+	<div ng-repeat="symptom in $ctrl.symptoms | filter:$ctrl.search"
+		class="card m-md-1 col-lg-4 col-md-6">
+			<div class="card-body">
+				{{symptom}}&nbsp&nbsp&nbsp
+				<input id="checkBox" type="checkbox" ng-model="choice" ng-change="$ctrl.changeStatus(choice,symptom)">
+			</div>
+	</div>
+</div>

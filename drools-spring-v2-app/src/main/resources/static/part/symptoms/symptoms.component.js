@@ -8,15 +8,39 @@ angular.module('symptoms')
 			DiseaseService.getAllSymptoms(this.placeType)
 				.then( (response) => {
 					this.symptoms = response.data;
+					
+					this.symptoms = this.symptoms.filter(function(el){
+						return !el.startsWith("I_");
+					}); 
+					
 				}, () => {
 					this.symptoms = null;
-				});
-//
-//			this.order = null;
-//			this.isReverse = true;
-//			this.orderBy = (order) => {
-//				this.isReverse = (this.order === order) ? !this.isReverse : false;
-//				this.order = order;
-//			};
+				}); 
+			this.symptomList = [];
+			this.changeStatus = (choice,symptom) =>{
+				
+				if(choice == true){
+					this.symptomList.push(symptom);
+					//alert(this.symptomList);
+				}
+				else{
+					//alert(symptom +  " " + "false");
+					var sy = symptom;
+					this.symptomList = this.symptomList.filter(function(el){
+						return el !== sy;
+					});
+					alert(this.symptomList);
+				}
+					
+			}
+			
+			this.mostLikely = () =>{
+				alert("normal");
+			}
+			
+			this.mostLikelyList = () =>{
+				alert("list");
+			
+			}
 		}
 	});
