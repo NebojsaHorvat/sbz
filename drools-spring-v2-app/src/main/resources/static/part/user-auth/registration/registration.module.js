@@ -1,5 +1,5 @@
 'use strict';
 
-angular.module('userAuth.registration', [
+angular.module('registration', [
 	'core.user'
 ]);
