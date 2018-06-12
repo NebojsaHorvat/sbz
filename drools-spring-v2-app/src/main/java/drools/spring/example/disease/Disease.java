@@ -31,11 +31,21 @@ public class Disease {
 	
 	private Long numberOfSymptoms;
 
+	private int diseaseGroup;
+	
 	public Disease() {}
 	
 	
 	
 	
+
+	public int getDiseaseGroup() {
+		return diseaseGroup;
+	}
+
+	public void setDiseaseGroup(int diseaseGroup) {
+		this.diseaseGroup = diseaseGroup;
+	}
 
 	public Long getNumberOfSymptoms() {
 		return numberOfSymptoms;

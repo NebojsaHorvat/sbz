@@ -28,6 +28,7 @@ rule "Prehlada"
     then
     	if($c >= 4){
 	    	Disease disease = new Disease();
+	    	disease.setDiseaseGroup(1);
 	    	disease.setDiseaseType(DiseaseType.PREHLADA);
 	    	disease.setChance($c/5.0);
 	    	disease.setNumberOfSymptoms($c);
@@ -55,6 +56,7 @@ rule "Groznica"
     then
     	if($c >= 4){
 	    	Disease disease = new Disease();
+	    	disease.setDiseaseGroup(1);
 	    	disease.setDiseaseType(DiseaseType.GROZNICA);
 	    	disease.setChance($c/8.0);	    	
 	    	disease.setNumberOfSymptoms($c);
@@ -82,6 +84,7 @@ rule "Upala krajnika"
     then
     	if($c >= 4){
 	    	Disease disease = new Disease();
+	    	disease.setDiseaseGroup(1);
 	    	disease.setDiseaseType(DiseaseType.UPALA_KRAJNIKA);
 	    	disease.setChance($c/8.0);
 	    	disease.setNumberOfSymptoms($c);
@@ -108,6 +111,7 @@ rule "Sinusna infekcija"
     then
     	if($c >= 4){
 	    	Disease disease = new Disease();
+	    	disease.setDiseaseGroup(1);
 	    	disease.setDiseaseType(DiseaseType.SINUSNA_INFEKCIJA);
 	    	disease.setChance(($c+1)/7.0);
 	    	disease.setNumberOfSymptoms($c);
