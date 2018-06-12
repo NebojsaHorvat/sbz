@@ -21,7 +21,8 @@
 		class="card m-md-1 col-lg-4 col-md-6">
 			<div class="card-body">
 				<h3 class="card-title">
-					<a ui-sref="home.placeDetail({id: place.id})" class= 'btn btn-custom'>
+					<a ui-sref="home.placeDetail({id: place.id})" class= 'btn btn-custom'
+					ng-click ='$ctrl.choosePatient(patient)'>
 						Choose patient
 					</a>
 				</h3>

@@ -3,7 +3,7 @@
 angular.module('patients')
 	.component('myPatients', {
 		templateUrl: '/part/patients/patients.template.html',
-		controller: function($stateParams,PatientsService) {
+		controller: function($stateParams,PatientsService,$window,$rootScope) {
 
 			PatientsService.getAll(this.placeType)
 				.then( (response) => {
@@ -11,6 +11,11 @@ angular.module('patients')
 				}, () => {
 					this.patients = null;
 				});
+			
+			this.choosePatient = (patient) => {
+				$rootScope.patient = patient;
+				$window.location.href = '#!/symptoms'
+			}
 
 		}
 	});
