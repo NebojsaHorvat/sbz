@@ -44,7 +44,6 @@ public class DiseaseServiceImpl implements DiseaseService{
 		List<Disease> diseases = new ArrayList<Disease>();
 		KieSession kieSession = kieContainer.newKieSession();
 	    kieSession.setGlobal("diseaseList", diseases);
-//		kieSession.setGlobal("comboCount", 2);
 		for(Symptom s: symptoms) {
 			kieSession.insert(s);
 		}

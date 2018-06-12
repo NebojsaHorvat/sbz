@@ -1,0 +1,76 @@
+<ul class="nav flex-column">
+	<li class="nav-item">
+		<a class="nav-link"
+			ui-sref="home.places({placeType: 'theater'})"
+			ui-sref-active="active">
+				<i class="fas fa-search"></i>
+				Pronadji pacienta
+		</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link"
+			ui-sref="home.places({placeType: 'cinema'})"
+			ui-sref-active="active">
+				<i class="fas fa-plus"></i>
+				Unesi simptome
+		</a>
+	</li>
+	<!-- ng-if="$root.user.userType == 'SYSADMIN'" -->
+	<li class="nav-item">
+		<a class="nav-link"
+			ui-sref="home.addPlace"
+			ui-sref-active="active">
+				<i class="fas fa-list"></i>
+				Najverovatnija bolest
+		</a>
+	</li>
+	<li  class="nav-item">
+		<a class="nav-link"
+			ui-sref="home.changeRole"
+			ui-sref-active="active">
+				<i class="fas fa-list"></i>
+				Spisak najverovatnijih bolesti
+		</a>
+	</li>
+	<!-- ng-if="$root.user" -->
+	<li class="nav-item" >
+		<a class="nav-link"
+			ui-sref="home.reservations({type: 'future'})"
+			ui-sref-active="active">
+				<i class="fas fa-list"></i>
+				Simptomi bolesti
+		</a>
+	</li>
+	<li class="nav-item" >
+		<a class="nav-link"
+			ui-sref="home.reservations({type: 'history'})"
+			ui-sref-active="active">
+				<i class="fas fa-ticket-alt"></i>
+				Uspostavljanje dijagnoze
+		</a>
+	</li>
+	<li class="nav-item" >
+		<a class="nav-link"
+			ui-sref="home.reservations({type: 'history'})"
+			ui-sref-active="active">
+				<i class="fas fa-medkit"></i>
+				Prepisivanje lekova
+		</a>
+	</li>
+	<li class="nav-item" >
+		<a class="nav-link"
+			ui-sref="home.reservations({type: 'history'})"
+			ui-sref-active="active">
+				<i class="fas fa-chart-bar"></i>
+				Izvestavanje
+		</a>
+	</li>
+	<li class="nav-item" >
+		<a class="nav-link"
+			ui-sref="home.reservations({type: 'history'})"
+			ui-sref-active="active">
+				<i class="fas fa-desktop"></i>
+				Monitoring
+		</a>
+	</li>
+</ul>
