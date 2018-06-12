@@ -2,5 +2,6 @@
 
 angular.module('core', [
 	'core.user',
-	'core.patients'
+	'core.patients',
+	'core.disease'
 ]);

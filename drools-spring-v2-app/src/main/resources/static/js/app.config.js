@@ -21,6 +21,12 @@ angular.module('diagnostic')
 			})
 			
 			.state({
+				name: 'home.symptoms',
+				url: 'symptoms',
+				component: 'mySymptoms'
+			})
+			
+			.state({
 				name: 'error',
 				url: '/error',
 				template: '<h1>Error 404</h1>'

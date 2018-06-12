@@ -2,5 +2,6 @@
 
 angular.module('home', [
 	'home.sidebar',
-	'patients'
+	'patients',
+	'symptoms'
 ]);
