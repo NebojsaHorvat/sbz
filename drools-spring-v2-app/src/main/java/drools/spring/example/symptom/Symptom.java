@@ -26,5 +26,47 @@ public class Symptom {
 	
 	private long timeStamp;
 	
+	public Symptom() {}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public SymptomType getSymptomType() {
+		return symptomType;
+	}
+
+	public void setSymptomType(SymptomType symptomType) {
+		this.symptomType = symptomType;
+	}
+
+	public long getTimeStamp() {
+		return timeStamp;
+	}
+
+	public void setTimeStamp(long timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+	
 	
 }

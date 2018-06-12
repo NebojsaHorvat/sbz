@@ -1,0 +1,116 @@
+//created on: Jun 11, 2018
+package drools.spring.rules
+
+//list any import classes here.
+import drools.spring.example.symptom.Symptom;
+import drools.spring.example.symptom.SymptomType;
+import drools.spring.example.disease.Disease;
+import drools.spring.example.disease.DiseaseType;
+
+//declare any global variables here
+
+global java.util.List diseaseList;
+//global Integer comboCount;
+
+
+rule "Prehlada"
+
+    when
+        accumulate(
+        	Symptom( 
+        	symptomType == SymptomType.CURENJE_NOSA ||
+        	symptomType == SymptomType.BOL_U_GRLU ||
+        	symptomType == SymptomType.GLAVOBOLJA ||
+        	symptomType == SymptomType.KIJANJE ||
+        	symptomType == SymptomType.KASLJANJE 
+        	),$c: count(1)
+        )
+    then
+    	if($c >= 4){
+	    	Disease disease = new Disease();
+	    	disease.setDiseaseType(DiseaseType.PREHLADA);
+	    	disease.setChance($c/5.0);
+	    	System.out.println("Usao u PREHLADA "+ $c/5.0);
+	    	
+	        diseaseList.add(disease);
+	    }
+
+end
+
+rule "Groznica"
+
+    when
+        accumulate(
+        	Symptom( 
+        	symptomType == SymptomType.KIJANJE ||
+        	symptomType == SymptomType.BOL_U_GRLU ||
+        	symptomType == SymptomType.KASLJANJE ||
+        	symptomType == SymptomType.TEMPERATURA_38 ||
+        	symptomType == SymptomType.CURENJE_IZ_NOSA ||
+        	symptomType == SymptomType.GLAVOBOLJA ||
+        	symptomType == SymptomType.DRHTAVICA 
+        	),$c: count(1)
+        )
+    then
+    	if($c >= 4){
+	    	Disease disease = new Disease();
+	    	disease.setDiseaseType(DiseaseType.GROZNICA);
+	    	disease.setChance($c/5.0);
+	    	System.out.println("Usao u GROZNICA "+ $c/8.0);
+	    	
+	        diseaseList.add(disease);
+        }
+end
+
+rule "Upala krajnika"
+
+    when
+        accumulate(
+        	Symptom( 
+        	symptomType == SymptomType.BOL_U_GRLU ||
+        	symptomType == SymptomType.BOL_KOJI_SE_SIRI_OKO_USIJU ||
+        	symptomType == SymptomType.GLAVOBOLJA ||
+        	symptomType == SymptomType.TEMPERATURA_40_41 ||
+        	symptomType == SymptomType.DRHTAVICA ||
+        	symptomType == SymptomType.GUBLJENJE_APETITA ||
+        	symptomType == SymptomType.UMOR ||
+        	symptomType == SymptomType.ZUTI_SEKRET_IZ_NOSA 
+        	),$c: count(1)
+        )
+    then
+    	if($c >= 4){
+	    	Disease disease = new Disease();
+	    	disease.setDiseaseType(DiseaseType.UPALA_KRAJNIKA);
+	    	disease.setChance($c/5.0);
+	    	System.out.println("Usao u UPALA_KRAJNIKA "+ $c/8.0);
+	    	
+	        diseaseList.add(disease);
+        }
+end
+
+rule "Sinusna infekcija"
+
+    when
+    	Symptom( symptomType == SymptomType.I_PREHLADA_GROZNICA_60_DANA)
+        accumulate(
+        	Symptom( 
+        	symptomType == SymptomType.OTICANJE_OKO_OCIJU ||
+        	symptomType == SymptomType.GLAVOBOLJA ||
+        	symptomType == SymptomType.ZUTI_SEKRET_IZ_NOSA ||
+        	symptomType == SymptomType.BOL_U_GLAVI ||
+        	symptomType == SymptomType.TEMPERATURA_38 ||
+        	symptomType == SymptomType.KASLJANJE
+        	),$c: count(1)
+        )
+    then
+    	if($c >= 4){
+	    	Disease disease = new Disease();
+	    	disease.setDiseaseType(DiseaseType.SINUSNA_INFEKCIJA);
+	    	disease.setChance($c/5.0);
+	    	System.out.println("Usao u SINUSNA_INFEKCIJA "+ ($c+1)/7.0);
+	    	
+	        diseaseList.add(disease);
+        }
+end
+
+

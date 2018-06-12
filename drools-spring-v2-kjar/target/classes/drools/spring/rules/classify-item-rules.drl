@@ -7,6 +7,8 @@ rule "Classify Item - Low Range"
     when
         $i: Item( cost <= 200, category == Category.NA )
     then
+        	System.out.println("Usao u pravilo LOW");
+    
         $i.setCategory(Item.Category.LOW_RANGE);
         update($i);
 end

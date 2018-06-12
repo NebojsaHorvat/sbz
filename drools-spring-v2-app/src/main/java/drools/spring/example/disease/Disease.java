@@ -23,7 +23,61 @@ public class Disease {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Patient patient;
 	
-	private SymptomType symptomType;
+	private DiseaseType diseaseType;
 	
 	private long timeStamp;
+	
+	private double chance;
+
+	public Disease() {}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public DiseaseType getDiseaseType() {
+		return diseaseType;
+	}
+
+	public void setDiseaseType(DiseaseType diseaseType) {
+		this.diseaseType = diseaseType;
+	}
+
+	public long getTimeStamp() {
+		return timeStamp;
+	}
+
+	public void setTimeStamp(long timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+	public double getChance() {
+		return chance;
+	}
+
+	public void setChance(double chance) {
+		this.chance = chance;
+	}
+	
+	
 }
