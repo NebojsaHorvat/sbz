@@ -10,13 +10,14 @@ angular.module('symptoms')
 					this.symptoms = response.data;
 					
 					this.symptoms = this.symptoms.filter(function(el){
-						return !el.startsWith("I_");
+						return ( !el.startsWith("I_") ) && (!el.includes('TEMPERATURA'));
 					}); 
 					
 				}, () => {
 					this.symptoms = null;
 				}); 
 			this.symptomList = [];
+			
 			this.changeStatus = (choice,symptom) =>{
 				
 				if(choice == true){
@@ -29,17 +30,48 @@ angular.module('symptoms')
 					this.symptomList = this.symptomList.filter(function(el){
 						return el !== sy;
 					});
-					alert(this.symptomList);
+					//alert(this.symptomList);
 				}
 					
+			}
+			
+			this.changeTemperature = () =>{
+				//alert(this.temperature)
+				if(this.temperature == undefined && this.temperature == null){
+					this.symptomList = this.symptomList.filter(function(el){
+						return !el.includes('TEMPERATURA');
+					});
+				}
+				
 			}
 			
 			this.mostLikely = () =>{
 				alert("normal");
 			}
 			
+			
 			this.mostLikelyList = () =>{
-				alert("list");
+				// Ovde izbacujem sve prethodne simptome temperature
+				this.symptomList = this.symptomList.filter(function(el){
+					return !el.includes('TEMPERATURA');
+				});
+				if(this.temperature > 38  )
+					this.symptomList.push("TEMPERATURA_38");
+				if(this.temperature >= 40 && this.temperature <=41 )
+					this.symptomList.push("TEMPERATURA_40_41");
+
+				alert(this.symptomList)
+//				DiseaseService.getAllSymptoms(this.placeType)
+//				.then( (response) => {
+//					this.symptoms = response.data;
+//					
+//					this.symptoms = this.symptoms.filter(function(el){
+//						return !el.startsWith("I_");
+//					}); 
+//					
+//				}, () => {
+//					this.symptoms = null;
+//				}); 
 			
 			}
 		}

@@ -1,6 +1,6 @@
-<button ng-disabled ="$ctrl.symptomList.length == 0" class = 'btn btn-custom'
+<button ng-disabled ="$ctrl.symptomList.length == 0 && $ctrl.temperature == undefined" class = 'btn btn-custom'
 	ng-click="$ctrl.mostLikely()">Najverovatnija bolest</button> &nbsp&nbsp&nbsp
-<button ng-disabled ="$ctrl.symptomList.length == 0" class = 'btn btn-custom'
+<button ng-disabled ="$ctrl.symptomList.length == 0 && $ctrl.temperature == undefined" class = 'btn btn-custom'
 	ng-click="$ctrl.mostLikelyList()">Spisak najverovatnijih bolest</button> 
 <h1>Pronadji simptome</h1>
 <form class="form-row">
@@ -17,6 +17,9 @@
 				</span>
 			</div>
 		</div>
+	</div>
+	<div class="form-group input-group">
+	Temperature &nbsp&nbsp: &nbsp&nbsp<input type='number' ng-model='$ctrl.temperature' ng-change='$ctrl.changeTemperature()')> 
 	</div>
 </form> 
 
