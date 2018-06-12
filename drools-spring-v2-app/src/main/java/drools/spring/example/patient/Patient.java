@@ -21,11 +21,13 @@ public class Patient {
 
 	public Patient () {}
 	
+	
 	public Patient(String name, String surname) {
 		super();
 		this.name = name;
 		this.surname = surname;
 	}
+
 
 	public Long getId() {
 		return id;

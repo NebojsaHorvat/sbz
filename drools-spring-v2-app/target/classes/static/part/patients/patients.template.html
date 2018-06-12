@@ -1,17 +1,35 @@
 <h1>Find patient</h1>
 <form class="form-row">
-		<div class="col-md-auto">
-			<div class="form-group input-group">
-				<input type="text"
-					class="form-control"
-					ng-model="$ctrl.search"
-					placeholder="Search {{$ctrl.placeType | lowercase}}s"
-					autofocus/>
-				<div class="input-group-append">
-					<span class="input-group-text">
-						<i class="fas fa-search"></i>
-					</span>
-				</div>
+	<div class="col-md-auto">
+		<div class="form-group input-group">
+			<input type="text"
+				class="form-control"
+				ng-model="$ctrl.search"
+				placeholder="Search {{$ctrl.placeType | lowercase}}s"
+				autofocus/>
+			<div class="input-group-append">
+				<span class="input-group-text">
+					<i class="fas fa-search"></i>
+				</span>
 			</div>
 		</div>
-	</form>
+	</div>
+</form>
+	
+<div class="row no-gutters align-items-stretch">
+	<div ng-repeat="patient in $ctrl.patients | filter:$ctrl.search"
+		class="card m-md-1 col-lg-4 col-md-6">
+			<div class="card-body">
+				<h3 class="card-title">
+					<a ui-sref="home.placeDetail({id: place.id})" class= 'btn btn-custom'>
+						Choose patient
+					</a>
+				</h3>
+				<div class="card-subtitle mb-2 text-muted">
+					{{patient.name}}<br>
+					{{patient.surname}}
+				</div>
+				
+			</div>
+	</div>
+</div>

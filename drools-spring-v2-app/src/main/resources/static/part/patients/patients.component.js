@@ -12,11 +12,5 @@ angular.module('patients')
 					this.patients = null;
 				});
 
-			this.order = null;
-			this.isReverse = true;
-			this.orderBy = (order) => {
-				this.isReverse = (this.order === order) ? !this.isReverse : false;
-				this.order = order;
-			};
 		}
 	});
