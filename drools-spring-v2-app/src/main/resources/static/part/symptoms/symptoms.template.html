@@ -39,7 +39,7 @@
 <div ng-if='$ctrl.diseases != null'>
 	<h1>Najverovatnije bolesti:</h1>
 	<div class="row no-gutters align-items-stretch">
-	<div ng-repeat="disease in $ctrl.diseases  | orderBy:'chance'"
+	<div ng-repeat="disease in $ctrl.diseases  | orderBy:'numberOfSymptoms':true"
 		class="card m-md-1 col-lg-4 col-md-6">
 			<div class="card-body">
 				<h3 class="card-title">

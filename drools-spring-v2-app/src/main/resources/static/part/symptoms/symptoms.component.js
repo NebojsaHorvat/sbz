@@ -45,7 +45,7 @@ angular.module('symptoms')
 				
 			}
 			
-			this.getListOfDiseases = () =>{
+			this.getListOfDiseases = (one) =>{
 				// Ovde izbacujem sve prethodne simptome temperature
 				this.symptomList = this.symptomList.filter(function(el){
 					return !el.includes('TEMPERATURA');
@@ -66,7 +66,13 @@ angular.module('symptoms')
 				DiseaseService.getListOfDiseases( dat,$rootScope.patient.id)
 				.then( (response) => {
 					this.diseases = response.data;
-					alert(this.diseases);
+					if(one == true){
+						this.max = this.diseases.reduce(function(prev, current) {
+						    return (prev.chance > current.chance) ? prev : current
+						})
+						this.diseases = [];
+						this.diseases.push(this.max);
+					}
 					
 				}, () => {
 					this.diseases = null;
@@ -75,13 +81,12 @@ angular.module('symptoms')
 			}
 			
 			this.mostLikely = () =>{
-				this.list = this.getListOfDiseases();
-				
+				this.getListOfDiseases(true)
 			}
 			
 			
 			this.mostLikelyList = () =>{
-				this.list = this.getListOfDiseases();
+				this.getListOfDiseases(false);
 			}
 		}
 	});
