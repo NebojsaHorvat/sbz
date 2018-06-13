@@ -100,7 +100,6 @@ salience 100
     when
     	$d: Disease( diseaseType == DiseaseType.GROZNICA || diseaseType == DiseaseType.GROZNICA)
     then
-   		System.out.println("Usao u PBOLOVAO_U_60 DANA");
     	Long now =  System.currentTimeMillis();
     	Long before60Day = now - 60*24*3600*1000; // dana*sati*sekund u satu*mili
     	if($d.getTimeStamp() > before60Day){

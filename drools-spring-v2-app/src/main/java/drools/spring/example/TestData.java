@@ -58,6 +58,9 @@ public class TestData {
 		Disease disease1 = new Disease(p1, DiseaseType.GROZNICA, 1528892785341L, 1.0, 7L, 1);
 		diseaseService.add(disease1);
 		
+		Disease disease2 = new Disease(p1, DiseaseType.HIPERTENZIJA, 1262304000000L, 1.0, 7L, 1);
+		diseaseService.add(disease2);
+		
 		for(int i = 0; i < 12 ; i++) {
 			Symptom s = new Symptom(p1, SymptomType.VISOK_PRITISAK, System.currentTimeMillis());
 			symptomService.add(s);

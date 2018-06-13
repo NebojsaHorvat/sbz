@@ -1,0 +1,69 @@
+//created on: Jun 11, 2018
+package drools.spring.rules
+
+//list any import classes here.
+import drools.spring.example.symptom.Symptom;
+import drools.spring.example.symptom.SymptomType;
+import drools.spring.example.disease.Disease;
+import drools.spring.example.disease.DiseaseType;
+
+//declare any global variables here
+
+global java.util.List diseaseList;
+global Long now1
+
+rule "SPEC_HIPER_HRONICNA_BUBREZNA "
+salience 100
+    when
+    	$d:Disease(diseaseType == DiseaseType.HIPERTENZIJA) 
+    	not Symptom( symptomType == SymptomType.SPEC_HRONICNA_BUBREZNA)
+    then
+    	if( (now1 - $d.getTimeStamp() ) > 6L*30L*24L*3600L*1000L) {
+	    	System.out.println("SPEC_HIPER_HRONICNA_BUBREZNA");
+	    	Symptom symptom = new Symptom();
+	    	symptom.setSymptomType(SymptomType.SPEC_HRONICNA_BUBREZNA);
+	    	insert(symptom);
+        }
+end
+
+rule "SPEC_DIJABETESS_HRONICNA_BUBREZNA "
+salience 100
+    when
+    	Disease( ( diseaseType == DiseaseType.DIJABETES) )
+    	not Symptom( symptomType == SymptomType.SPEC_HRONICNA_BUBREZNA)
+    	
+    then
+    	
+    	System.out.println("SPEC_DIJABETESS_HRONICNA_BUBREZNA");
+    	Symptom symptom = new Symptom();
+    	symptom.setSymptomType(SymptomType.SPEC_HRONICNA_BUBREZNA);
+    	insert(symptom);
+        
+end
+
+rule "Hornicna bubrezna bolest"
+no-loop
+    when
+    	Symptom( symptomType == SymptomType.SPEC_HRONICNA_BUBREZNA)
+    	accumulate(
+        	Symptom( 
+        	symptomType == SymptomType.ZAMOR ||
+        	symptomType == SymptomType.NOCTURIA ||
+        	symptomType == SymptomType.OTICANJE_NOGU_I_ZGLOBOVA ||
+        	symptomType == SymptomType.GUSENJE ||
+        	symptomType == SymptomType.BOL_U_GRUDIMA
+        	),$c: count(1)
+        )
+    then
+    	if($c >=2 ){
+	    	Disease disease = new Disease();
+	    	disease.setDiseaseGroup(3);
+	    	disease.setDiseaseType(DiseaseType.HRONICNA_BUBREZNA_BOLEST);
+	    	disease.setChance(($c+1)/6.0);
+	    	disease.setNumberOfSymptoms($c+1);
+	    	System.out.println("Usao u HRONICNA_BUBREZNA_BOLEST");
+	    	
+	        diseaseList.add(disease);
+        }
+        
+end

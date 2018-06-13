@@ -101,7 +101,8 @@ public class DiseaseServiceImpl implements DiseaseService{
 			d.setPatient(patient);
 		}
 		// Treba i sacuvati sve bolesti
-		diseaseRepository.saveAll(diseases);
+		//diseaseRepository.saveAll(diseases);
+		// NE, TREBA SACUVATI SAMO ONE KOJE SE GIJAGNOSTIKUJU
 
 		return diseases;
 	}
