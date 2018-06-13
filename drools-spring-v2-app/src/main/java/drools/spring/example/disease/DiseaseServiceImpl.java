@@ -70,6 +70,17 @@ public class DiseaseServiceImpl implements DiseaseService{
         kieSession.dispose();
 		return diseases;
 	}
+	
+	public List<SymptomType> getDiseaseSymptoms(Disease disease) {
+		List<SymptomType> symptomTypes = new ArrayList<SymptomType>();
+		KieSession kieSession = kieContainer.newKieSession();
+	    kieSession.setGlobal("symptomTypes", symptomTypes);
+	    kieSession.insert(disease);
+	    kieSession.getAgenda().getAgendaGroup("diseaseSymptoms").setFocus();
+	    kieSession.fireAllRules();
+	    kieSession.dispose();
+		return symptomTypes;
+	}
 
 	@Transactional(readOnly = false)
 	public Disease getMostLikelyDisease(List<Symptom> symptoms) {
@@ -116,5 +127,7 @@ public class DiseaseServiceImpl implements DiseaseService{
 		}
 		return additionalSymptoms;
 	}
+
+	
 
 }

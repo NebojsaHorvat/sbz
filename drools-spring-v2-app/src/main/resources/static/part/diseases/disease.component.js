@@ -13,5 +13,15 @@ angular.module('diseases')
 				this.diseases = null;
 			}); 
 			
+			this.displayDisease = (disease) => {
+				this.disease = disease;
+				DiseaseService.getDiseaseSymptoms(disease)
+				.then( (response) => {
+					this.symptoms = response.data;
+					
+				}, () => {
+					this.symptoms = null;
+				});
+			}
 		}
 	});

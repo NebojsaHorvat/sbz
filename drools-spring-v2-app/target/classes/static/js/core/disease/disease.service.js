@@ -11,4 +11,7 @@ angular.module('core.disease')
 		this.getAllDiseases = () => {
 			return $http.get('/api/diseases');
 		};
+		this.getDiseaseSymptoms = (name) => {
+			return $http.get('/api/diseases/symptoms/'+name);
+		};
 	});

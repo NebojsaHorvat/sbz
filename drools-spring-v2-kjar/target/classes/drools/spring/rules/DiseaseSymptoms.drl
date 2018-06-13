@@ -1,0 +1,122 @@
+//created on: Jun 11, 2018
+package drools.spring.rules
+
+//list any import classes here.
+import drools.spring.example.symptom.Symptom;
+import drools.spring.example.symptom.SymptomType;
+import drools.spring.example.disease.Disease;
+import drools.spring.example.disease.DiseaseType;
+
+//declare any global variables here
+
+global java.util.List symptomTypes;
+//global Integer comboCount;
+
+rule "Prehlada simptomi "
+agenda-group "diseaseSymptoms"
+    when
+    	$d:Disease(diseaseType == DiseaseType.PREHLADA) 
+    then
+    	symptomTypes.add(SymptomType.CURENJE_NOSA);
+    	symptomTypes.add(SymptomType.BOL_U_GRLU);
+    	symptomTypes.add(SymptomType.GLAVOBOLJA);
+    	symptomTypes.add(SymptomType.KIJANJE);
+    	symptomTypes.add(SymptomType.KASLJANJE);
+end
+
+rule "Groznica simptomi "
+agenda-group "diseaseSymptoms"
+    when
+    	$d:Disease(diseaseType == DiseaseType.GROZNICA) 
+    then
+    	symptomTypes.add(SymptomType.KIJANJE);
+    	symptomTypes.add(SymptomType.BOL_U_GRLU);
+    	symptomTypes.add(SymptomType.TEMPERATURA_38);
+    	symptomTypes.add(SymptomType.CURENJE_IZ_NOSA);
+    	symptomTypes.add(SymptomType.GLAVOBOLJA);
+    	symptomTypes.add(SymptomType.DRHTAVICA);
+end
+
+
+rule "UPALA_KRAJNIKA simptomi "
+agenda-group "diseaseSymptoms"
+    when
+    	$d:Disease(diseaseType == DiseaseType.UPALA_KRAJNIKA) 
+    then
+    	symptomTypes.add(SymptomType.BOL_U_GRLU);
+    	symptomTypes.add(SymptomType.BOL_KOJI_SE_SIRI_OKO_USIJU);
+    	symptomTypes.add(SymptomType.GLAVOBOLJA);
+    	symptomTypes.add(SymptomType.TEMPERATURA_40_41);
+    	symptomTypes.add(SymptomType.DRHTAVICA);
+    	symptomTypes.add(SymptomType.GUBLJENJE_APETITA);
+    	symptomTypes.add(SymptomType.UMOR);
+    	symptomTypes.add(SymptomType.ZUTI_SEKRET_IZ_NOSA);
+    	
+end
+
+rule "SINUSNA_INFEKCIJA simptomi "
+agenda-group "diseaseSymptoms"
+    when
+    	$d:Disease(diseaseType == DiseaseType.SINUSNA_INFEKCIJA) 
+    then
+    	symptomTypes.add(SymptomType.OTICANJE_OKO_OCIJU);
+    	symptomTypes.add(SymptomType.GLAVOBOLJA);
+    	symptomTypes.add(SymptomType.ZUTI_SEKRET_IZ_NOSA);
+    	symptomTypes.add(SymptomType.BOL_U_GRLU);
+    	symptomTypes.add(SymptomType.TEMPERATURA_38);
+    	symptomTypes.add(SymptomType.KASLJANJE);
+    	symptomTypes.add(SymptomType.I_PREHLADA_GROZNICA_60_DANA);
+    	
+end
+
+rule "HIPERTENZIJA simptomi "
+agenda-group "diseaseSymptoms"
+    when
+    	$d:Disease(diseaseType == DiseaseType.HIPERTENZIJA) 
+    then
+    	symptomTypes.add(SymptomType.I_U_6_MESECI_10_PUTA_POVISE_PRITISAK);
+    	
+end
+
+rule "DIJABETES simptomi "
+agenda-group "diseaseSymptoms"
+    when
+    	$d:Disease(diseaseType == DiseaseType.DIJABETES) 
+    then
+    	symptomTypes.add(SymptomType.CESTO_URINIRANJE);
+    	symptomTypes.add(SymptomType.GUBITAK_TELESNE_TEZINE);
+    	symptomTypes.add(SymptomType.ZAMOR);
+    	symptomTypes.add(SymptomType.MUCNINA_I_POVRACANJE);
+    	
+end
+
+rule "HRONICNA_BUBREZNA_BOLEST simptomi "
+agenda-group "diseaseSymptoms"
+    when
+    	$d:Disease(diseaseType == DiseaseType.HRONICNA_BUBREZNA_BOLEST) 
+    then
+    	symptomTypes.add(SymptomType.ZAMOR);
+    	symptomTypes.add(SymptomType.NOCTURIA);
+    	symptomTypes.add(SymptomType.OTICANJE_NOGU_I_ZGLOBOVA);
+    	symptomTypes.add(SymptomType.GUSENJE);
+    	symptomTypes.add(SymptomType.BOL_U_GRUDIMA);
+    	symptomTypes.add(SymptomType.I_BOLUJE_OD_HIPERTENZIJE_VISE_OD_6_MESECI);
+    	symptomTypes.add(SymptomType.I_BOLUJE_OD_DIJABETESA);
+    	
+end
+
+
+rule "AKUTNA_BUBREZNA_BOLEST simptomi "
+agenda-group "diseaseSymptoms"
+    when
+    	$d:Disease(diseaseType == DiseaseType.AKUTNA_BUBREZNA_BOLEST) 
+    then
+    	symptomTypes.add(SymptomType.OPORAVLJA_SE_OD_OPERACIJE);
+    	symptomTypes.add(SymptomType.ZAMOR);
+    	symptomTypes.add(SymptomType.GUSENJE);
+    	symptomTypes.add(SymptomType.OTICANJE_NOGU_I_ZGLOBOVA);
+    	symptomTypes.add(SymptomType.DIJAREJA);
+    	symptomTypes.add(SymptomType.I_U_POSLEDNJIH_14_DANA_VISOKA_TEMEPERATURA);
+    	symptomTypes.add(SymptomType.I_U_POLSEDNJIH_21_DAN_PRIMAO_ANTIBIOTIKE);
+    	
+end

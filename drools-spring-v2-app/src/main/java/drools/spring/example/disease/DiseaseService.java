@@ -4,6 +4,7 @@ import java.util.List;
 
 import drools.spring.example.patient.Patient;
 import drools.spring.example.symptom.Symptom;
+import drools.spring.example.symptom.SymptomType;
 
 public interface DiseaseService {
 
@@ -18,4 +19,6 @@ public interface DiseaseService {
 	Disease getMostLikelyDisease(List<Symptom> symptoms);
 
 	List<Disease> createSympomsReturnDiseases(SymptomTypeListDTO symptomTypesList);
+
+	List<SymptomType> getDiseaseSymptoms(Disease disease);
 }

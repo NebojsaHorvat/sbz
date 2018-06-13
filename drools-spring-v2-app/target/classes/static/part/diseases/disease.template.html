@@ -28,3 +28,17 @@
 	</div>
 	
 </div>
+
+
+
+<div ng-if='$ctrl.symptoms != null'>
+	<h1>Simptomi {{$ctrl.disease}} :</h1>
+	<div class="row no-gutters align-items-stretch">
+	<div ng-repeat="symptom in $ctrl.symptoms "
+		class="card m-md-1 col-lg-4 col-md-6">
+			<div class="card-body">
+				{{symptom}}
+			</div>
+	</div>
+	</div>
+</div>

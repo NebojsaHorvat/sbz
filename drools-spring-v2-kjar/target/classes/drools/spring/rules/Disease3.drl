@@ -16,12 +16,12 @@ rule "SPEC_HIPER_HRONICNA_BUBREZNA "
 salience 100
     when
     	$d:Disease(diseaseType == DiseaseType.HIPERTENZIJA) 
-    	not Symptom( symptomType == SymptomType.SPEC_HRONICNA_BUBREZNA)
+    	not Symptom( symptomType == SymptomType.I_SPEC_HRONICNA_BUBREZNA)
     then
     	if( (now1 - $d.getTimeStamp() ) > 6L*30L*24L*3600L*1000L) {
 	    	System.out.println("SPEC_HIPER_HRONICNA_BUBREZNA");
 	    	Symptom symptom = new Symptom();
-	    	symptom.setSymptomType(SymptomType.SPEC_HRONICNA_BUBREZNA);
+	    	symptom.setSymptomType(SymptomType.I_SPEC_HRONICNA_BUBREZNA);
 	    	insert(symptom);
         }
 end
@@ -30,13 +30,13 @@ rule "SPEC_DIJABETESS_HRONICNA_BUBREZNA "
 salience 100
     when
     	Disease( ( diseaseType == DiseaseType.DIJABETES) )
-    	not Symptom( symptomType == SymptomType.SPEC_HRONICNA_BUBREZNA)
+    	not Symptom( symptomType == SymptomType.I_SPEC_HRONICNA_BUBREZNA)
     	
     then
     	
     	System.out.println("SPEC_DIJABETESS_HRONICNA_BUBREZNA");
     	Symptom symptom = new Symptom();
-    	symptom.setSymptomType(SymptomType.SPEC_HRONICNA_BUBREZNA);
+    	symptom.setSymptomType(SymptomType.I_SPEC_HRONICNA_BUBREZNA);
     	insert(symptom);
         
 end
@@ -44,7 +44,7 @@ end
 rule "Hornicna bubrezna bolest"
 no-loop
     when
-    	Symptom( symptomType == SymptomType.SPEC_HRONICNA_BUBREZNA)
+    	Symptom( symptomType == SymptomType.I_SPEC_HRONICNA_BUBREZNA)
     	accumulate(
         	Symptom( 
         	symptomType == SymptomType.ZAMOR ||
