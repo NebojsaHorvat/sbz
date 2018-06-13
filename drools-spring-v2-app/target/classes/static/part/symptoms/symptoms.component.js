@@ -3,7 +3,7 @@
 angular.module('symptoms')
 	.component('mySymptoms', {
 		templateUrl: '/part/symptoms/symptoms.template.html',
-		controller: function($stateParams,DiseaseService) {
+		controller: function($stateParams,DiseaseService,$rootScope) {
 
 			DiseaseService.getAllSymptoms(this.placeType)
 				.then( (response) => {
@@ -45,34 +45,43 @@ angular.module('symptoms')
 				
 			}
 			
-			this.mostLikely = () =>{
-				alert("normal");
-			}
-			
-			
-			this.mostLikelyList = () =>{
+			this.getListOfDiseases = () =>{
 				// Ovde izbacujem sve prethodne simptome temperature
 				this.symptomList = this.symptomList.filter(function(el){
 					return !el.includes('TEMPERATURA');
 				});
+				
 				if(this.temperature > 38  )
 					this.symptomList.push("TEMPERATURA_38");
 				if(this.temperature >= 40 && this.temperature <=41 )
 					this.symptomList.push("TEMPERATURA_40_41");
 
 				alert(this.symptomList)
-//				DiseaseService.getAllSymptoms(this.placeType)
-//				.then( (response) => {
-//					this.symptoms = response.data;
-//					
-//					this.symptoms = this.symptoms.filter(function(el){
-//						return !el.startsWith("I_");
-//					}); 
-//					
-//				}, () => {
-//					this.symptoms = null;
-//				}); 
+				
+				var dat = {
+					"symptomTypes" : this.symptomList,
+					"id" : $rootScope.patient.id
+				}
+				
+				DiseaseService.getListOfDiseases( dat,$rootScope.patient.id)
+				.then( (response) => {
+					this.diseases = response.data;
+					alert(this.diseases);
+					
+				}, () => {
+					this.diseases = null;
+					alert("Error");
+				}); 
+			}
 			
+			this.mostLikely = () =>{
+				this.list = this.getListOfDiseases();
+				
+			}
+			
+			
+			this.mostLikelyList = () =>{
+				this.list = this.getListOfDiseases();
 			}
 		}
 	});

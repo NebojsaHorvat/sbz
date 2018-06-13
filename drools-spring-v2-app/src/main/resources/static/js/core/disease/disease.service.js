@@ -5,5 +5,7 @@ angular.module('core.disease')
 		this.getAllSymptoms = () => {
 			return $http.get('/api/diseases/symptoms');
 		};
-		
+		this.getListOfDiseases = (symptomTypesList,id) => {
+			return $http.post('/api/diseases/reasoning',symptomTypesList);
+		};
 	});
