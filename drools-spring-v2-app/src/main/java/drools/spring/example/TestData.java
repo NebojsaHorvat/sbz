@@ -1,5 +1,8 @@
 package drools.spring.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,9 @@ import drools.spring.example.disease.DiseaseService;
 import drools.spring.example.disease.DiseaseType;
 import drools.spring.example.patient.Patient;
 import drools.spring.example.patient.PatientService;
+import drools.spring.example.symptom.Symptom;
+import drools.spring.example.symptom.SymptomService;
+import drools.spring.example.symptom.SymptomType;
 import drools.spring.example.users.User;
 import drools.spring.example.users.UserService;
 import drools.spring.example.users.UserType;
@@ -25,6 +31,9 @@ public class TestData {
 	
 	@Autowired
 	private DiseaseService diseaseService;
+	
+	@Autowired
+	private SymptomService symptomService;
 	
 	@PostConstruct
 	private void init() {
@@ -48,6 +57,11 @@ public class TestData {
 		
 		Disease disease1 = new Disease(p1, DiseaseType.GROZNICA, 1528892785341L, 1.0, 7L, 1);
 		diseaseService.add(disease1);
+		
+		for(int i = 0; i < 12 ; i++) {
+			Symptom s = new Symptom(p1, SymptomType.VISOK_PRITISAK, System.currentTimeMillis());
+			symptomService.add(s);
+		}
 		
 	}
 }

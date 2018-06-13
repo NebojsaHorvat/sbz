@@ -22,7 +22,7 @@ public class SymptomServiceImpl implements SymptomService{
 	public List<Symptom> findAll() {
 		return symptomRepository.findAll();
 	}
-
+	@Transactional(readOnly = false)
 	public Symptom add(Symptom symptom) {
 		return symptomRepository.save(symptom);
 	}
@@ -30,7 +30,7 @@ public class SymptomServiceImpl implements SymptomService{
 	public List<Symptom> findByPatient(Patient patient){
 		return symptomRepository.findByPatient(patient);
 	}
-
+	@Transactional(readOnly = false)
 	public void saveSymptoms(List<Symptom> symptoms) {
 		symptomRepository.saveAll(symptoms);
 		

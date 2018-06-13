@@ -54,6 +54,9 @@ public class DiseaseServiceImpl implements DiseaseService{
 		List<Disease> diseases = new ArrayList<Disease>();
 		KieSession kieSession = kieContainer.newKieSession();
 	    kieSession.setGlobal("diseaseList", diseases);
+	    Long now1 = System.currentTimeMillis();
+	    kieSession.setGlobal("now1", now1);
+
 		for(Symptom s: symptoms) {
 			kieSession.insert(s);
 		}
@@ -73,6 +76,7 @@ public class DiseaseServiceImpl implements DiseaseService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	@Transactional(readOnly = false)
 	public List<Disease> createSympomsReturnDiseases(SymptomTypeListDTO symptomTypesList) {
 		Long id = (long) symptomTypesList.getId();
@@ -87,6 +91,9 @@ public class DiseaseServiceImpl implements DiseaseService{
 		// Sada treba dodate simptome sacuvati
 		symptomService.saveSymptoms(symptoms);
 		
+		// Preuzmi iz baze simptome od pre koji su sad relevantni
+		List<Symptom> additionlSymptoms = addAditionalSymptoms(patient);
+		symptoms.addAll(additionlSymptoms);
 		List<Disease> diseases = getMostLickelyDiseases(symptoms,patient);
 		
 		for(Disease d : diseases) {
@@ -97,6 +104,16 @@ public class DiseaseServiceImpl implements DiseaseService{
 		diseaseRepository.saveAll(diseases);
 
 		return diseases;
+	}
+
+	private List<Symptom> addAditionalSymptoms(Patient patient) {
+		List<Symptom> allSymptoms = symptomService.findByPatient(patient);
+		List<Symptom> additionalSymptoms = new ArrayList<Symptom>();
+		for(Symptom s: allSymptoms) {
+			if(s.getSymptomType() == SymptomType.VISOK_PRITISAK)
+				additionalSymptoms.add(s);
+		}
+		return additionalSymptoms;
 	}
 
 }

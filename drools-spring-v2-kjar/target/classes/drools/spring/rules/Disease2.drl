@@ -1,0 +1,58 @@
+//created on: Jun 11, 2018
+package drools.spring.rules
+
+//list any import classes here.
+import drools.spring.example.symptom.Symptom;
+import drools.spring.example.symptom.SymptomType;
+import drools.spring.example.disease.Disease;
+import drools.spring.example.disease.DiseaseType;
+
+//declare any global variables here
+
+global java.util.List diseaseList;
+global Long now1
+//global Integer comboCount;
+
+
+rule "Hipertenzija"
+    when
+        accumulate(
+        	Symptom( 
+        	symptomType == SymptomType.VISOK_PRITISAK &&
+        	(timeStamp > (now1 - 6*30*24*3600*10000) )
+        	
+        	),$c: count(1)
+        )
+    then
+    	if($c >= 10){
+    		System.out.println("HIPERTENZIJA");
+	    	Disease disease = new Disease();
+	    	disease.setDiseaseGroup(2);
+	    	disease.setDiseaseType(DiseaseType.HIPERTENZIJA);
+	    	disease.setChance(1.0);
+	    	disease.setNumberOfSymptoms(1L);
+	    	
+	        diseaseList.add(disease);
+	    }
+    	
+end
+
+rule "Dijabetes"
+
+    when
+    	Symptom( symptomType == SymptomType.CESTO_URINIRANJE)
+    	Symptom( symptomType == SymptomType.GUBITAK_TELESNE_TEZINE)
+    	Symptom( symptomType == SymptomType.ZAMOR)
+    	Symptom( symptomType == SymptomType.MUCNINA_I_POVRACANJE)
+    then
+    	
+    	Disease disease = new Disease();
+    	disease.setDiseaseGroup(2);
+    	disease.setDiseaseType(DiseaseType.DIJABETES);
+    	disease.setChance(1);
+    	disease.setNumberOfSymptoms(4L);
+    	System.out.println("Usao u DIJABESTE");
+    	
+        diseaseList.add(disease);
+        
+end
