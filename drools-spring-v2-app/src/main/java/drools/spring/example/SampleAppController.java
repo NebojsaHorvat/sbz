@@ -47,23 +47,24 @@ public class SampleAppController {
 	@RequestMapping(value = "/diesase", method = RequestMethod.GET, produces = "application/json")
 	public List<Disease> getDissease() {
 		
-		List<Symptom> symptoms = new ArrayList<Symptom>();
-		Symptom symptom = new Symptom();
-		symptom.setSymptomType(SymptomType.GLAVOBOLJA);
-		symptoms.add(symptom);
-		Symptom symptom1 = new Symptom();
-		symptom1.setSymptomType(SymptomType.KIJANJE);
-		symptoms.add(symptom1);
-		Symptom symptom2 = new Symptom();
-		symptom2.setSymptomType(SymptomType.CURENJE_IZ_NOSA);
-		symptoms.add(symptom2);
-		Symptom symptom3 = new Symptom();
-		symptom3.setSymptomType(SymptomType.KASLJANJE);
-		symptoms.add(symptom3);
-		Symptom symptom4 = new Symptom();
-		symptom4.setSymptomType(SymptomType.BOL_U_GRLU);
-		symptoms.add(symptom4);
-		
-		return diseaseService.getMostLickelyDiseases(symptoms);
+//		List<Symptom> symptoms = new ArrayList<Symptom>();
+//		Symptom symptom = new Symptom();
+//		symptom.setSymptomType(SymptomType.GLAVOBOLJA);
+//		symptoms.add(symptom);
+//		Symptom symptom1 = new Symptom();
+//		symptom1.setSymptomType(SymptomType.KIJANJE);
+//		symptoms.add(symptom1);
+//		Symptom symptom2 = new Symptom();
+//		symptom2.setSymptomType(SymptomType.CURENJE_IZ_NOSA);
+//		symptoms.add(symptom2);
+//		Symptom symptom3 = new Symptom();
+//		symptom3.setSymptomType(SymptomType.KASLJANJE);
+//		symptoms.add(symptom3);
+//		Symptom symptom4 = new Symptom();
+//		symptom4.setSymptomType(SymptomType.BOL_U_GRLU);
+//		symptoms.add(symptom4);
+//		
+//		return diseaseService.getMostLickelyDiseases(symptoms);
+		return null;
 	}
 }

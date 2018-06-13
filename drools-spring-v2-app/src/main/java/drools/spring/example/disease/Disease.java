@@ -35,9 +35,16 @@ public class Disease {
 	
 	public Disease() {}
 	
-	
-	
-	
+	public Disease(Patient patient, DiseaseType diseaseType, long timeStamp, double chance, Long numberOfSymptoms,
+			int diseaseGroup) {
+		super();
+		this.patient = patient;
+		this.diseaseType = diseaseType;
+		this.timeStamp = timeStamp;
+		this.chance = chance;
+		this.numberOfSymptoms = numberOfSymptoms;
+		this.diseaseGroup = diseaseGroup;
+	}
 
 	public int getDiseaseGroup() {
 		return diseaseGroup;

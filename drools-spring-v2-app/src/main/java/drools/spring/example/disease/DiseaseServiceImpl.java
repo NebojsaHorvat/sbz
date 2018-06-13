@@ -50,13 +50,19 @@ public class DiseaseServiceImpl implements DiseaseService{
 	}
 	
 	@Transactional(readOnly = false)
-	public List<Disease> getMostLickelyDiseases(List<Symptom> symptoms) {
+	public List<Disease> getMostLickelyDiseases(List<Symptom> symptoms,Patient patient) {
 		List<Disease> diseases = new ArrayList<Disease>();
 		KieSession kieSession = kieContainer.newKieSession();
 	    kieSession.setGlobal("diseaseList", diseases);
 		for(Symptom s: symptoms) {
 			kieSession.insert(s);
 		}
+		// Treba i ubaciti sve boleski od kojih se pacijent bolovao u rezoner
+		List<Disease> oldDiseases = diseaseRepository.findByPatient(patient);
+		for(Disease d: oldDiseases) {
+			kieSession.insert(d);
+		}
+		
 		kieSession.fireAllRules();
         kieSession.dispose();
 		return diseases;
@@ -81,7 +87,7 @@ public class DiseaseServiceImpl implements DiseaseService{
 		// Sada treba dodate simptome sacuvati
 		symptomService.saveSymptoms(symptoms);
 		
-		List<Disease> diseases = getMostLickelyDiseases(symptoms);
+		List<Disease> diseases = getMostLickelyDiseases(symptoms,patient);
 		
 		for(Disease d : diseases) {
 			d.setTimeStamp(System.currentTimeMillis());

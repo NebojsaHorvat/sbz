@@ -5,6 +5,9 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import drools.spring.example.disease.Disease;
+import drools.spring.example.disease.DiseaseService;
+import drools.spring.example.disease.DiseaseType;
 import drools.spring.example.patient.Patient;
 import drools.spring.example.patient.PatientService;
 import drools.spring.example.users.User;
@@ -19,6 +22,9 @@ public class TestData {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private DiseaseService diseaseService;
 	
 	@PostConstruct
 	private void init() {
@@ -39,6 +45,9 @@ public class TestData {
 		patientService.add(p1);
 		Patient p2 = new Patient("Borislav","Puzic");
 		patientService.add(p2);
+		
+		Disease disease1 = new Disease(p1, DiseaseType.GROZNICA, 1528892785341L, 1.0, 7L, 1);
+		diseaseService.add(disease1);
 		
 	}
 }
