@@ -1,0 +1,30 @@
+<h1>Pronadji Bolest</h1>
+<form class="form-row">
+	<div class="col-md-auto">
+		<div class="form-group input-group">
+			<input type="text"
+				class="form-control"
+				ng-model="$ctrl.search"
+				placeholder="Search {{$ctrl.placeType | lowercase}}s"
+				autofocus/>
+			<div class="input-group-append">
+				<span class="input-group-text">
+					<i class="fas fa-search"></i>
+				</span>
+			</div>
+		</div>
+	</div>
+</form> 
+
+<div class="row no-gutters align-items-stretch">
+	<div ng-repeat="disease in $ctrl.diseases | filter:$ctrl.search"
+		class="card m-md-1 col-lg-4 col-md-6">
+			<div class="card-body">
+				{{disease}}&nbsp&nbsp&nbsp
+				<button ng-click="$ctrl.displayDisease(disease)" class = 'btn btn-custom'>Prikazi simptome</button>			
+				<button ng-click="$ctrl.diagnose(disease)" class = 'btn btn-custom'>Dijagnostikuj bolest</button>			
+
+			</div>
+	</div>
+	
+</div>

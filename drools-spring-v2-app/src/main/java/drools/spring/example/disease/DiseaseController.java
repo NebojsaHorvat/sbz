@@ -28,6 +28,16 @@ public class DiseaseController {
 	@Autowired
 	private SymptomService symptomService;
 	
+	@GetMapping()
+	public ResponseEntity<List<DiseaseType>> getDiseases(){
+		List<DiseaseType> diseases = Arrays.asList(DiseaseType.class.getEnumConstants());
+		
+		if(diseases == null || diseases.isEmpty())
+			return new ResponseEntity<List<DiseaseType>>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<List<DiseaseType>>(diseases,HttpStatus.OK);
+		
+	}
+	
 	@GetMapping("/symptoms")
 	public ResponseEntity<List<SymptomType>> getProjections(){
 		List<SymptomType> symptoms = Arrays.asList(SymptomType.class.getEnumConstants());

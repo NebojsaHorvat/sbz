@@ -4,5 +4,6 @@ angular.module('home', [
 	'home.sidebar',
 	'patients',
 	'symptoms',
-	'registration'
+	'registration',
+	'diseases'
 ]);

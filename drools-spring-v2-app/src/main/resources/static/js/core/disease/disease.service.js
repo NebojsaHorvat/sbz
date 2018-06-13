@@ -8,4 +8,7 @@ angular.module('core.disease')
 		this.getListOfDiseases = (symptomTypesList,id) => {
 			return $http.post('/api/diseases/reasoning',symptomTypesList);
 		};
+		this.getAllDiseases = () => {
+			return $http.get('/api/diseases');
+		};
 	});
