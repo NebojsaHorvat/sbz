@@ -9,4 +9,6 @@ public interface SymptomService {
 	List<Symptom> findAll ();
 	
 	Symptom add(Symptom symptom);
+
+	void saveSymptoms(List<Symptom> symptoms);
 }

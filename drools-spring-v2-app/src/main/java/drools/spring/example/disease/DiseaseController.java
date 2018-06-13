@@ -40,13 +40,13 @@ public class DiseaseController {
 	
 	@PostMapping("/reasoning")
 	public ResponseEntity<List<Disease>> getListOfDiseases(@RequestBody SymptomTypeListDTO symptomTypesList){
-		if(symptomTypesList.getSymptomTypes() == null || symptomTypesList.getSymptomTypes().size() == 0)
+		
+		if(symptomTypesList.getSymptomTypes() == null || symptomTypesList.getSymptomTypes().size() == 0 
+				|| symptomTypesList.getId() == 0)
 			return new ResponseEntity<List<Disease>>(HttpStatus.BAD_REQUEST);
-		for(SymptomType st : symptomTypesList.getSymptomTypes()) {
-			System.out.println(st);
-		}
-		List<Symptom> symptoms = new ArrayList();
-		List<Disease> diseases = diseaseService.getMostLickelyDiseases(symptoms);
+		
+		
+		List<Disease> diseases = diseaseService.createSympomsReturnDiseases(symptomTypesList);
 		
 		if(diseases == null || diseases.isEmpty())
 			return new ResponseEntity<List<Disease>>(HttpStatus.NOT_FOUND);

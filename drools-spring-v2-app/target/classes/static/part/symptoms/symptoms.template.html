@@ -31,4 +31,29 @@
 				<input id="checkBox" type="checkbox" ng-model="choice" ng-change="$ctrl.changeStatus(choice,symptom)">
 			</div>
 	</div>
+	
 </div>
+
+
+
+<div ng-if='$ctrl.diseases != null'>
+	<h1>Najverovatnije bolesti:</h1>
+	<div class="row no-gutters align-items-stretch">
+	<div ng-repeat="disease in $ctrl.diseases  | orderBy:'chance'"
+		class="card m-md-1 col-lg-4 col-md-6">
+			<div class="card-body">
+				<h3 class="card-title">
+					<p>{{disease.diseaseType}}</p>
+				</h3>
+				<div class="card-subtitle mb-2 text-muted">
+					<p>Verovatnoca &nbsp : &nbsp {{disease.chance}}</p>
+					<p>Broj simptoma &nbsp : &nbsp {{disease.numberOfSymptoms}}</p>
+					<p>Grupa &nbsp : &nbsp {{disease.diseaseGroup}}</p>
+					
+				</div>
+				<button class = 'btn btn-custom'>Dijagnostikuj bolest</button>
+			</div>
+	</div>
+	</div>
+</div>
+

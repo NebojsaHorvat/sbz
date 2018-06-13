@@ -9,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import drools.spring.example.patient.Patient;
+import drools.spring.example.patient.PatientService;
 import drools.spring.example.symptom.Symptom;
+import drools.spring.example.symptom.SymptomService;
+import drools.spring.example.symptom.SymptomType;
 
 @Transactional(readOnly = true)
 @Service
@@ -17,6 +21,12 @@ public class DiseaseServiceImpl implements DiseaseService{
 
 	@Autowired 
 	private DiseaseRepository diseaseRepository;
+	
+	@Autowired
+	private PatientService patientService;
+	
+	@Autowired
+	private SymptomService symptomService;
 	
     private final KieContainer kieContainer;
     
@@ -56,6 +66,31 @@ public class DiseaseServiceImpl implements DiseaseService{
 	public Disease getMostLikelyDisease(List<Symptom> symptoms) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Transactional(readOnly = false)
+	public List<Disease> createSympomsReturnDiseases(SymptomTypeListDTO symptomTypesList) {
+		Long id = (long) symptomTypesList.getId();
+		Patient patient = patientService.findOne(id);
+		if(patient == null)
+			return null;
+		List<Symptom> symptoms = new ArrayList();
+		for(SymptomType st : symptomTypesList.getSymptomTypes()) {
+			Symptom symptom = new Symptom(patient, st, System.currentTimeMillis());
+			symptoms.add(symptom);
+		}
+		// Sada treba dodate simptome sacuvati
+		symptomService.saveSymptoms(symptoms);
+		
+		List<Disease> diseases = getMostLickelyDiseases(symptoms);
+		
+		for(Disease d : diseases) {
+			d.setTimeStamp(System.currentTimeMillis());
+			d.setPatient(patient);
+		}
+		// Treba i sacuvati sve bolesti
+		diseaseRepository.saveAll(diseases);
+
+		return diseases;
 	}
 
 }

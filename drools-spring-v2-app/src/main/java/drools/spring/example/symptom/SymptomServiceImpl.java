@@ -31,4 +31,9 @@ public class SymptomServiceImpl implements SymptomService{
 		return symptomRepository.findByPatient(patient);
 	}
 
+	public void saveSymptoms(List<Symptom> symptoms) {
+		symptomRepository.saveAll(symptoms);
+		
+	}
+
 }

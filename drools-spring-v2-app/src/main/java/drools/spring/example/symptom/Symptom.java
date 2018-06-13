@@ -28,6 +28,13 @@ public class Symptom {
 	
 	public Symptom() {}
 
+	public Symptom(Patient patient, SymptomType symptomType, long timeStamp) {
+		super();
+		this.patient = patient;
+		this.symptomType = symptomType;
+		this.timeStamp = timeStamp;
+	}
+
 	public Long getId() {
 		return id;
 	}

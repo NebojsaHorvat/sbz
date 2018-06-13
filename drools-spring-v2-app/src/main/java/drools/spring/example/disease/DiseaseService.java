@@ -15,4 +15,6 @@ public interface DiseaseService {
 	List<Disease> getMostLickelyDiseases(List<Symptom> symptoms);
 	
 	Disease getMostLikelyDisease(List<Symptom> symptoms);
+
+	List<Disease> createSympomsReturnDiseases(SymptomTypeListDTO symptomTypesList);
 }
