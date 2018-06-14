@@ -3,7 +3,7 @@
 angular.module('symptoms')
 	.component('mySymptoms', {
 		templateUrl: '/part/symptoms/symptoms.template.html',
-		controller: function($stateParams,DiseaseService,$rootScope) {
+		controller: function($stateParams,DiseaseService,$rootScope,$window) {
 
 			DiseaseService.getAllSymptoms(this.placeType)
 				.then( (response) => {
@@ -99,7 +99,7 @@ angular.module('symptoms')
 				DiseaseService.diagnoseDisease( disease )
 				.then( (response) => {
 					$rootScope.disease = response.data;
-				
+					$window.location.href = '#!/medicine'
 				}, () => {
 					$rootScope.disease = undefined;
 					alert("Error");

@@ -128,6 +128,7 @@ public class DiseaseServiceImpl implements DiseaseService{
 		return additionalSymptoms;
 	}
 
+	@Transactional(readOnly = false)
 	public Disease diagnoseDisease(Disease disease) {
 		// Prvo proverimo da li je to patient id i izvucemo tog pacijenta iz baze
 		Long patientId = disease.getPatient().getId();
@@ -142,7 +143,7 @@ public class DiseaseServiceImpl implements DiseaseService{
 		disease.setTimeStamp(System.currentTimeMillis());
 		
 		// Sacuvamo bolest
-		diseaseRepository.save(disease);
+		disease = add(disease);
 		
 		return disease;
 	}

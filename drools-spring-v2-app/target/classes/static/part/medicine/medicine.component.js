@@ -32,5 +32,14 @@ angular.module('medicine')
 				
 			}
 			
+			this.prescripe = (medicine) => {
+				MedicineService.prescribe($rootScope.patient.id,medicine.id,$rootScope.disease.id)
+				.then( (response) =>{
+					alert("Lek uspesno prepisan");
+				},() =>{
+					alert("Error")
+				});
+			}
+			
 		}
 	});

@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import drools.spring.example.patient.Patient;
+import drools.spring.example.prescription.Prescription;
+import drools.spring.example.prescription.PrescriptionService;
 import drools.spring.example.users.User;
 import drools.spring.example.users.UserType;
 
@@ -25,6 +26,9 @@ public class MedicineController {
 
 	@Autowired
 	private MedicineService medicineService;
+	
+	@Autowired
+	private PrescriptionService prescriptionService;
 	
 	@Autowired
 	private HttpSession session;
@@ -88,5 +92,23 @@ public class MedicineController {
 			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		message = "{ \"message\" : \" "+message+"\"}";
 		return new ResponseEntity<String>(message,HttpStatus.OK);
+	}
+	
+	@GetMapping("/prescribe/{patientId:\\d+}/{medicineId:\\d+}/{diseaseId:\\d+}")
+	public ResponseEntity<Prescription> addWithIds (
+			 @PathVariable Long patientId
+			,@PathVariable Long medicineId
+			,@PathVariable Long diseaseId){
+		
+		User user = (User) session.getAttribute("user");
+		if(user == null)
+			return new ResponseEntity<Prescription>(HttpStatus.FORBIDDEN);
+		if(user.getUserType() != UserType.DOCTOR)
+			return new ResponseEntity<Prescription>(HttpStatus.FORBIDDEN);
+		
+		Prescription prescrition = prescriptionService.addPrescription(patientId, medicineId,diseaseId,user);
+		if(prescrition == null)
+			return new ResponseEntity<Prescription>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Prescription>(prescrition,HttpStatus.OK);
 	}
 }

@@ -13,6 +13,9 @@ angular.module('core.medicine')
 		};
 		this.checkAlergies = (patientId,medicineId) => {
 			return $http.get('/api/medicine/alergies/'+patientId+'/'+medicineId);
+		};
+		this.prescribe = (patientId,medicineId,dieaseId) => {
+			return $http.get('/api/medicine/prescribe/'+patientId+'/'+ medicineId +'/'+dieaseId);
 			
 		};
 		
