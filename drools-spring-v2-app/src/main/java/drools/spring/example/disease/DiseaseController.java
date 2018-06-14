@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import drools.spring.example.patient.Patient;
 import drools.spring.example.symptom.Symptom;
 import drools.spring.example.symptom.SymptomService;
 import drools.spring.example.symptom.SymptomType;
+import drools.spring.example.users.User;
+import drools.spring.example.users.UserType;
 
 @RestController
 @RequestMapping("/api/diseases")
@@ -28,6 +33,8 @@ public class DiseaseController {
 	@Autowired
 	private SymptomService symptomService;
 	
+	@Autowired
+	private HttpSession session;
 	
 	@GetMapping()
 	public ResponseEntity<List<DiseaseType>> getDiseases(){
@@ -80,6 +87,24 @@ public class DiseaseController {
 		if(diseases == null || diseases.isEmpty())
 			return new ResponseEntity<List<Disease>>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<List<Disease>>(diseases,HttpStatus.OK);
+		
+	}
+	
+	@PostMapping("/diagnose")
+	public ResponseEntity<Disease> getListOfDiseases(@RequestBody Disease disease){
+		
+		User user = (User) session.getAttribute("user");
+		if(user == null)
+			return new ResponseEntity<Disease>(HttpStatus.FORBIDDEN);
+		if(user.getUserType() != UserType.DOCTOR)
+			return new ResponseEntity<Disease>(HttpStatus.FORBIDDEN);
+		disease.setUser(user);
+		
+		Disease ret = diseaseService.diagnoseDisease(disease);
+		
+		if(ret == null )
+			return new ResponseEntity<Disease>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Disease>(ret,HttpStatus.OK);
 		
 	}
 

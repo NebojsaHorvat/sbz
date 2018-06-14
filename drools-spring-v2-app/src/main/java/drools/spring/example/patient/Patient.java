@@ -1,9 +1,19 @@
 package drools.spring.example.patient;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Version;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import drools.spring.example.medicine.Medicine;
 
 @Entity
 public class Patient {
@@ -19,6 +29,16 @@ public class Patient {
 	
 	private String surname;
 
+	private String alergicSubstances;
+	
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "PATIENT_MEDICINE",
+            joinColumns = @JoinColumn(name = "PATIENT_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "MEDICINE_ID", referencedColumnName = "ID"))
+    private List<Medicine> alergicMedicines;
+	
 	public Patient () {}
 	
 	

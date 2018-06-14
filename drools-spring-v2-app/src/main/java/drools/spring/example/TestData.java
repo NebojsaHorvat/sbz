@@ -55,10 +55,10 @@ public class TestData {
 		Patient p2 = new Patient("Borislav","Puzic");
 		patientService.add(p2);
 		
-		Disease disease1 = new Disease(p1, DiseaseType.GROZNICA, 1528892785341L, 1.0, 7L, 1);
+		Disease disease1 = new Disease(p1, DiseaseType.GROZNICA, 1528892785341L, 1.0, 7L, 1,null);
 		diseaseService.add(disease1);
 		
-		Disease disease2 = new Disease(p1, DiseaseType.HIPERTENZIJA, 1262304000000L, 1.0, 7L, 1);
+		Disease disease2 = new Disease(p1, DiseaseType.HIPERTENZIJA, 1262304000000L, 1.0, 7L, 1,null);
 		diseaseService.add(disease2);
 		
 		for(int i = 0; i < 12 ; i++) {

@@ -128,6 +128,25 @@ public class DiseaseServiceImpl implements DiseaseService{
 		return additionalSymptoms;
 	}
 
+	public Disease diagnoseDisease(Disease disease) {
+		// Prvo proverimo da li je to patient id i izvucemo tog pacijenta iz baze
+		Long patientId = disease.getPatient().getId();
+		if(patientId == null || patientId == 0)
+			return null;
+		Patient patient= patientService.findOne(patientId);
+		if(patient == null)
+			return null;
+		
+		// Stavljam bolesti sve informacije koje treba da nosi
+		disease.setPatient(patient);
+		disease.setTimeStamp(System.currentTimeMillis());
+		
+		// Sacuvamo bolest
+		diseaseRepository.save(disease);
+		
+		return disease;
+	}
+
 	
 
 }

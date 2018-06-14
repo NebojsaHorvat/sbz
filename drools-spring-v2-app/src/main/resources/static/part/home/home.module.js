@@ -5,5 +5,6 @@ angular.module('home', [
 	'patients',
 	'symptoms',
 	'registration',
-	'diseases'
+	'diseases',
+	'medicine'
 ]);

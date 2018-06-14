@@ -88,5 +88,22 @@ angular.module('symptoms')
 			this.mostLikelyList = () =>{
 				this.getListOfDiseases(false);
 			}
+			
+			this.diagnoseDisease = (disease) => {
+				if($rootScope.patient == undefined){
+					alert("Must indentify patient first");
+					return;
+				}
+				disease.patient = $rootScope.patient;
+				
+				DiseaseService.diagnoseDisease( disease )
+				.then( (response) => {
+					$rootScope.disease = response.data;
+				
+				}, () => {
+					$rootScope.disease = undefined;
+					alert("Error");
+				}); 
+			}
 		}
 	});

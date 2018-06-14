@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 import drools.spring.example.patient.Patient;
-import drools.spring.example.symptom.SymptomType;
+import drools.spring.example.users.User;
 
 @Entity
 public class Disease {
@@ -33,10 +33,13 @@ public class Disease {
 
 	private int diseaseGroup;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private User user;
+	
 	public Disease() {}
 	
 	public Disease(Patient patient, DiseaseType diseaseType, long timeStamp, double chance, Long numberOfSymptoms,
-			int diseaseGroup) {
+			int diseaseGroup, User user) {
 		super();
 		this.patient = patient;
 		this.diseaseType = diseaseType;
@@ -44,6 +47,15 @@ public class Disease {
 		this.chance = chance;
 		this.numberOfSymptoms = numberOfSymptoms;
 		this.diseaseGroup = diseaseGroup;
+		this.user = user;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getDiseaseGroup() {

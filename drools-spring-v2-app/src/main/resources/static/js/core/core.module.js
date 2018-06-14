@@ -3,5 +3,6 @@
 angular.module('core', [
 	'core.user',
 	'core.patients',
-	'core.disease'
+	'core.disease',
+	'core.medicine'
 ]);

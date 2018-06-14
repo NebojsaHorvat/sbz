@@ -21,4 +21,6 @@ public interface DiseaseService {
 	List<Disease> createSympomsReturnDiseases(SymptomTypeListDTO symptomTypesList);
 
 	List<SymptomType> getDiseaseSymptoms(Disease disease);
+
+	Disease diagnoseDisease(Disease disease);
 }
