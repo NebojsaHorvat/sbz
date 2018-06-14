@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import drools.spring.example.patient.Patient;
 import drools.spring.example.patient.PatientService;
+import drools.spring.example.prescription.Prescription;
+import drools.spring.example.prescription.PrescriptionService;
 import drools.spring.example.symptom.Symptom;
 import drools.spring.example.symptom.SymptomService;
 import drools.spring.example.symptom.SymptomType;
@@ -24,6 +26,9 @@ public class DiseaseServiceImpl implements DiseaseService{
 	
 	@Autowired
 	private PatientService patientService;
+	
+	@Autowired
+	private PrescriptionService prescriptionService;
 	
 	@Autowired
 	private SymptomService symptomService;
@@ -64,6 +69,11 @@ public class DiseaseServiceImpl implements DiseaseService{
 		List<Disease> oldDiseases = diseaseRepository.findByPatient(patient);
 		for(Disease d: oldDiseases) {
 			kieSession.insert(d);
+		}
+		// Treba takodje da ubacim sve lekove koje je pacijent primao
+		List<Prescription> prescriptions = prescriptionService.findByPatient(patient);
+		for(Prescription p :prescriptions) {
+			kieSession.insert(p);
 		}
 		
 		kieSession.fireAllRules();

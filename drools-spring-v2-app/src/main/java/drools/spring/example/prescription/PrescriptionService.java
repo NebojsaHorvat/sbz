@@ -2,6 +2,7 @@ package drools.spring.example.prescription;
 
 import java.util.List;
 
+import drools.spring.example.patient.Patient;
 import drools.spring.example.users.User;
 
 public interface PrescriptionService {
@@ -14,5 +15,7 @@ public interface PrescriptionService {
 
 	Prescription addPrescription(Long patientId, 
 			Long medicineId, Long diseaseId,User user);
+
+	List<Prescription> findByPatient(Patient patient);
 	
 }

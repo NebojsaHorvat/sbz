@@ -60,6 +60,10 @@ public class PrescriptionServiceImpl implements PrescriptionService{
 		
 		return p;
 	}
+
+	public List<Prescription> findByPatient(Patient patient) {
+		return prescriptionRepository.findByPatient(patient);
+	}
 	
 	
 

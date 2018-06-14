@@ -6,6 +6,10 @@ import drools.spring.example.symptom.Symptom;
 import drools.spring.example.symptom.SymptomType;
 import drools.spring.example.disease.Disease;
 import drools.spring.example.disease.DiseaseType;
+import drools.spring.example.prescription.Prescription;
+import drools.spring.example.medicine.MedicineType;
+import drools.spring.example.medicine.Medicine;
+
 
 //declare any global variables here
 
@@ -62,6 +66,92 @@ no-loop
 	    	disease.setChance(($c+1)/6.0);
 	    	disease.setNumberOfSymptoms($c+1);
 	    	System.out.println("Usao u HRONICNA_BUBREZNA_BOLEST");
+	    	
+	        diseaseList.add(disease);
+        }
+        
+end
+
+
+
+
+
+
+rule "I_SPEC_OPORVALJA_AKUTNA_BUBREZNA "
+salience 100
+    when
+    	Symptom( ( symptomType == SymptomType.OPORAVLJA_SE_OD_OPERACIJE) )
+    	not Symptom( symptomType == SymptomType.I_SPEC_AKUTNA_BUBREZNA)
+    	
+    then
+    	
+    	System.out.println("I_SPEC_OPORVALJA_AKUTNA_BUBREZNA");
+    	Symptom symptom = new Symptom();
+    	symptom.setSymptomType(SymptomType.I_SPEC_AKUTNA_BUBREZNA);
+    	insert(symptom);
+        
+end
+
+
+
+rule "SPEC_POVISENA_TEMPERATURA_AKUTNA_BUBREZNA "
+salience 100
+    when
+    	Disease( 
+    		diseaseType == DiseaseType.SINUSNA_INFEKCIJA ||
+    		diseaseType == DiseaseType.UPALA_KRAJNIKA ||
+    		diseaseType == DiseaseType.GROZNICA
+    			 )
+    	not Symptom( symptomType == SymptomType.I_SPEC_AKUTNA_BUBREZNA)
+    	
+    then
+    	
+    	System.out.println("SPEC_POVISENA_TEMPERATURA_AKUTNA_BUBREZNA");
+    	Symptom symptom = new Symptom();
+    	symptom.setSymptomType(SymptomType.I_SPEC_AKUTNA_BUBREZNA);
+    	insert(symptom);
+        
+end
+
+
+rule "SPEC_ANTIBIOTIK_AKUTNA_BUBREZNA "
+salience 100
+    when
+    	Prescription( 
+    		medicine.medicineType == MedicineType.ANTIBIOTIK
+    			 )
+    	not Symptom( symptomType == SymptomType.I_SPEC_AKUTNA_BUBREZNA)
+    	
+    then
+    	
+    	System.out.println("SPEC_ANTIBIOTIK_AKUTNA_BUBREZNA");
+    	Symptom symptom = new Symptom();
+    	symptom.setSymptomType(SymptomType.I_SPEC_AKUTNA_BUBREZNA);
+    	insert(symptom);
+        
+end
+
+
+rule "Akutna bubrezna bolest"
+no-loop
+    when
+    	Symptom( symptomType == SymptomType.I_SPEC_AKUTNA_BUBREZNA)
+    	accumulate(
+        	Symptom( 
+        	symptomType == SymptomType.ZAMOR ||
+        	symptomType == SymptomType.GUSENJE ||
+        	symptomType == SymptomType.OTICANJE_NOGU_I_ZGLOBOVA ||
+        	symptomType == SymptomType.DIJAREJA 
+        	),$c: count(1)
+        )
+    then
+    	if($c >=2 ){
+	    	Disease disease = new Disease();
+	    	disease.setDiseaseGroup(3);
+	    	disease.setDiseaseType(DiseaseType.AKUTNA_BUBREZNA_BOLEST);
+	    	disease.setChance(($c+1)/5.0);
+	    	disease.setNumberOfSymptoms($c+1);
+	    	System.out.println("Usao u AKUTNA_BUBREZNA_BOLEST");
 	    	
 	        diseaseList.add(disease);
         }
