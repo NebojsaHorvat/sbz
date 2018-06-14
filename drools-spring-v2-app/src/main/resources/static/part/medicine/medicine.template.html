@@ -1,3 +1,30 @@
+<h2> Available medicine </h2>
+<div class="row flex-column">
+	<div ng-repeat="medicine in $ctrl.medicines" class="card mx-md-1 col-lg-4 col-md-6">
+		<div class="card-body">
+			<h3 class="card-title">
+				{{medicine.name}}
+			</h3>
+			<div class="card-subtitle mb-2 text-muted">
+				Tip = {{medicine.medicineType}}<br>
+			</div>
+			<button 
+			class="btn btn-custom"
+			ng-click="$ctrl.checkAlergies(medicine)">Proveri alergije
+			</button>&nbsp&nbsp
+			<button 
+			class="btn btn-custom"
+			ng-click="$ctrl.prescripe(medicine)">Prepisi
+			</button>
+				
+			
+		</div>
+	</div>
+</div>
+
+
+
+
 
 <h2>Add Medicine</h2>
 

@@ -1,0 +1,57 @@
+//created on: Jun 11, 2018
+package drools.spring.rules
+
+//list any import classes here.
+import drools.spring.example.symptom.Symptom;
+import drools.spring.example.symptom.SymptomType;
+import drools.spring.example.disease.Disease;
+import drools.spring.example.disease.DiseaseType;
+
+import drools.spring.example.patient.Patient;
+import drools.spring.example.medicine.Medicine;
+import drools.spring.example.medicine.Message;
+
+//declare any global variables here
+
+global Message retMessage;
+
+rule "Alergija supstanci"
+agenda-group "checkAlergies"
+    when
+    	$p : Patient( alergicSubstances != null)
+    	$m : Medicine ( substances != null )
+    then
+    	String [] patientSubstances = $p.getAlergicSubstances().split(",");
+		String [] medicineSupstances = $m.getSubstances().split(",");
+		
+		for(String patientS :patientSubstances) {
+			for(String medicineS: medicineSupstances) {
+				if(patientS.contains(medicineS)) {
+					if(retMessage.equals(""))
+						retMessage.message = "Patient is alergic to "+ medicineS +" in " +$m.getName();
+					else {
+						retMessage.message += ",";
+						retMessage.message += "Patient is alergic to "+ medicineS +" in " +$m.getName();
+					}
+					break;
+				}
+			}
+		}
+end
+
+rule "Alergija na lekove"
+agenda-group "checkAlergies"
+    when
+
+    	$m : Medicine ( )
+    	$p :Patient( $m memberOf alergicMedicines)
+    	
+    then
+		System.out.println("Usao u alergija na lekove"+$m.getName());
+		if(retMessage.equals(""))
+			retMessage.message = "Patient is alergic to "+ $m.getName();
+		else {
+			retMessage.message += ",";
+			retMessage.message += "Patient is alergic to "+ $m.getName();
+		}
+end

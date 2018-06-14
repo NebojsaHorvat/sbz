@@ -73,4 +73,20 @@ public class MedicineController {
 			return new ResponseEntity<Medicine>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<Medicine>(medicine,HttpStatus.OK);
 	}
+	
+	@GetMapping("alergies/{patientId:\\d+}/{medicineId:\\d+}")
+	public ResponseEntity<String> getPatient(@PathVariable Long patientId,@PathVariable Long medicineId){
+		
+		User user = (User) session.getAttribute("user");
+		if(user == null)
+			return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+		if(user.getUserType() != UserType.DOCTOR)
+			return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+		
+		String message = medicineService.checkAlergies(patientId, medicineId);
+		if(message == null)
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+		message = "{ \"message\" : \" "+message+"\"}";
+		return new ResponseEntity<String>(message,HttpStatus.OK);
+	}
 }

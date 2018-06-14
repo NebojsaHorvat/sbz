@@ -11,4 +11,9 @@ angular.module('core.medicine')
 		this.add = (data) => {
 			return $http.post('/api/medicine/', data);
 		};
+		this.checkAlergies = (patientId,medicineId) => {
+			return $http.get('/api/medicine/alergies/'+patientId+'/'+medicineId);
+			
+		};
+		
 	});

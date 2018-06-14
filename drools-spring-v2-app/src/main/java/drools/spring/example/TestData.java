@@ -1,8 +1,5 @@
 package drools.spring.example;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +8,9 @@ import org.springframework.stereotype.Component;
 import drools.spring.example.disease.Disease;
 import drools.spring.example.disease.DiseaseService;
 import drools.spring.example.disease.DiseaseType;
+import drools.spring.example.medicine.Medicine;
+import drools.spring.example.medicine.MedicineService;
+import drools.spring.example.medicine.MedicineType;
 import drools.spring.example.patient.Patient;
 import drools.spring.example.patient.PatientService;
 import drools.spring.example.symptom.Symptom;
@@ -35,6 +35,10 @@ public class TestData {
 	@Autowired
 	private SymptomService symptomService;
 	
+	@Autowired
+	private MedicineService medicineService;
+	
+	
 	@PostConstruct
 	private void init() {
 		
@@ -50,9 +54,9 @@ public class TestData {
 		user3.setUserType(UserType.SYSADMIN);
 		userService.register(user3);
 		
-		Patient p1 = new Patient("Nebojsa","Horvat");
+		Patient p1 = new Patient("Nebojsa","Horvat","penicilin,taurin");
 		patientService.add(p1);
-		Patient p2 = new Patient("Borislav","Puzic");
+		Patient p2 = new Patient("Borislav","Puzic","vitamin");
 		patientService.add(p2);
 		
 		Disease disease1 = new Disease(p1, DiseaseType.GROZNICA, 1528892785341L, 1.0, 7L, 1,null);
@@ -66,5 +70,12 @@ public class TestData {
 			symptomService.add(s);
 		}
 		
+		Medicine m1 = new Medicine(MedicineType.ANTIBIOTIK, "penicili,taurin", "Palitrex");
+		medicineService.add(m1);
+		Medicine m2 = new Medicine(MedicineType.ANALGETIK, "aspirin,vitamin", "Aspirin");
+		medicineService.add(m2);
+		p1.addAlergicMedicine(m2);
+		patientService.add(p1);
+
 	}
 }

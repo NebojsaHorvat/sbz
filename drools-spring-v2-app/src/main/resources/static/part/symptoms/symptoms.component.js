@@ -56,7 +56,7 @@ angular.module('symptoms')
 				if(this.temperature >= 40 && this.temperature <=41 )
 					this.symptomList.push("TEMPERATURA_40_41");
 
-				alert(this.symptomList)
+				//alert(this.symptomList)
 				
 				var dat = {
 					"symptomTypes" : this.symptomList,

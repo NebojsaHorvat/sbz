@@ -1,5 +1,6 @@
 package drools.spring.example.patient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -42,10 +43,29 @@ public class Patient {
 	public Patient () {}
 	
 	
-	public Patient(String name, String surname) {
+	public Patient(String name, String surname,String alergicSubstances) {
 		super();
+		alergicMedicines = new ArrayList<Medicine>();
 		this.name = name;
 		this.surname = surname;
+		this.alergicSubstances = alergicSubstances;
+	}
+
+	
+	public String getAlergicSubstances() {
+		return alergicSubstances;
+	}
+
+	public void setAlergicSubstances(String alergicSubstances) {
+		this.alergicSubstances = alergicSubstances;
+	}
+
+	public List<Medicine> getAlergicMedicines() {
+		return alergicMedicines;
+	}
+
+	public void setAlergicMedicines(List<Medicine> alergicMedicines) {
+		this.alergicMedicines = alergicMedicines;
 	}
 
 
@@ -79,6 +99,11 @@ public class Patient {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+
+	public void addAlergicMedicine(Medicine m2) {
+		alergicMedicines.add(m2);
 	}
 	
 	

@@ -4,15 +4,14 @@ angular.module('medicine')
 	.component('myMedicine', {
 		templateUrl: '/part/medicine/medicine.template.html',
 		controller: function($stateParams,DiseaseService,$rootScope,MedicineService) {
-			this.status = ""
-//			DiseaseService.getAllDiseases()
-//			.then( (response) => {
-//				this.diseases = response.data;
-//				
-//			}, () => {
-//				this.diseases = null;
-//			}); 
-//			
+			MedicineService.getAll()
+			.then( (response) => {
+				this.medicines = response.data;
+				
+			}, () => {
+				this.medicines = null;
+			}); 
+			
 			this.send = () => {
 				
 				MedicineService.add(this.newMedicine)
@@ -22,6 +21,15 @@ angular.module('medicine')
 				}, () => {
 					this.status = "Error";
 				});
+			}
+			this.checkAlergies = (medicine) =>{
+				MedicineService.checkAlergies($rootScope.patient.id,medicine.id)
+				.then( (response) =>{
+					alert(response.data.message);
+				},() =>{
+					alert("Error")
+				});
+				
 			}
 			
 		}
