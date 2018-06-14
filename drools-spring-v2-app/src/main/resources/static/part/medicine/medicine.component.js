@@ -3,8 +3,8 @@
 angular.module('medicine')
 	.component('myMedicine', {
 		templateUrl: '/part/medicine/medicine.template.html',
-		controller: function($stateParams,DiseaseService,$rootScope) {
-			
+		controller: function($stateParams,DiseaseService,$rootScope,MedicineService) {
+			this.status = ""
 //			DiseaseService.getAllDiseases()
 //			.then( (response) => {
 //				this.diseases = response.data;
@@ -13,16 +13,16 @@ angular.module('medicine')
 //				this.diseases = null;
 //			}); 
 //			
-//			this.displayDisease = (disease) => {
-//				this.disease = disease;
-//				DiseaseService.getDiseaseSymptoms(disease)
-//				.then( (response) => {
-//					this.symptoms = response.data;
-//					
-//				}, () => {
-//					this.symptoms = null;
-//				});
-//			}
+			this.send = () => {
+				
+				MedicineService.add(this.newMedicine)
+				.then( (response) => {
+					this.status = "Success";
+					
+				}, () => {
+					this.status = "Error";
+				});
+			}
 			
 		}
 	});

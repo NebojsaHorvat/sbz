@@ -25,12 +25,23 @@ public class Medicine {
 	
 	private String substances;
 	
+	private String name;
+	
 	public Medicine () {}
 
-	public Medicine(Patient patient, Disease disease, User user, MedicineType medicineType, String substances) {
+	public Medicine(MedicineType medicineType, String substances, String name) {
 		super();
 		this.medicineType = medicineType;
 		this.substances = substances;
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Long getId() {

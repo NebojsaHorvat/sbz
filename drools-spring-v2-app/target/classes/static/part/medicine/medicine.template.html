@@ -1,1 +1,44 @@
-<h1>Medicine</h1>
+
+<h2>Add Medicine</h2>
+
+<div class="row justify-content-md-left">
+	<form name="medicineForm" >
+	
+	<div class="form-group row">
+    <label for="nameInput">Ime:</label>
+	<input type="text"
+		id="nameInput"
+		class="form-group form-control"
+		placeholder="Name"
+		ng-model="$ctrl.newMedicine.name"
+		ng-required="true"/>
+	</div>
+	
+	<div class="form-group row">
+    <label for="artistsInput">Substance(razdvojene zarezom):</label>
+	<input type="text"
+		id="artistsInput"
+		class="form-group form-control"
+		placeholder="Artists list"
+		ng-model="$ctrl.newMedicine.substances" 
+		ng-required="true"/>
+	</div>
+	
+	<div class="form-group row">
+    <label for="artistsInput">Tipe leka:</label>
+	 <select ng-model="$ctrl.newMedicine.medicineType" ng-required="true">
+		  <option value="ANTIBIOTIK">ANTIBIOTIK</option>
+		  <option value="ANALGETIK">ANALGETIK</option>
+		  <option value="OSTALO">OSTALO</option>
+	</select> 
+	</div>
+	
+	<button class="btn btn-custom"
+		ng-click="medicineForm.$valid && $ctrl.send()">Send
+	</button>
+	<p>
+		{{$ctrl.status}}
+	</p>
+	</form>
+	
+</div>
