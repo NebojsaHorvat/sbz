@@ -1,0 +1,25 @@
+//created on: Jun 14, 2018
+package drools.spring.rules
+//list any import classes here.
+
+import drools.spring.example.events.HeartBeatEvent;
+import drools.spring.example.events.Misfires;
+
+
+//declare any global variables here
+
+global Misfires misfires;
+
+
+rule "Ubrzan_rad"
+//agenda-group "heartBeat"
+    when
+       $n: Number (intValue >= 25) from accumulate(
+       		HeartBeatEvent() over window:time (10s),
+       		count(1)
+       )
+    then
+       System.out.println("Number of heartBeats in 10s :"+$n);
+       misfires.count++;
+
+end
