@@ -9,4 +9,13 @@ angular.module('core.patients')
 		this.getOne = (id) => {
 			return $http.get('/api/patients/'+id);
 		};
+		this.getChronical = () => {
+			return $http.get('/api/patients/chronical');
+		};
+		this.getAddiction = () => {
+			return $http.get('/api/patients/addiction');
+		};
+		this.getImmunity = () => {
+			return $http.get('/api/patients/immunity');
+		};
 	});

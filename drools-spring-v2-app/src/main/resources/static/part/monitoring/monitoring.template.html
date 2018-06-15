@@ -1,0 +1,11 @@
+<h1>Izaberite koju simulaciju zelite da pokrenete</h1><br>
+<button  class = 'btn btn-custom'
+	ng-click="$ctrl.oxygenLvl()">Posmatranje nivoa kiseonika</button> &nbsp&nbsp&nbsp
+<button  class = 'btn btn-custom'
+	ng-click="$ctrl.heartMonitoring()">Posmatranje srcanog ritma</button> &nbsp&nbsp&nbsp
+<button  class = 'btn btn-custom'
+	ng-click="$ctrl.dialisa()">Potreba za hitnom dializom</button> &nbsp&nbsp&nbsp
+<br>
+	
+<h1>Rezultati simulacije :</h1>
+<h3 >{{$ctrl.results}}</h3>

@@ -30,6 +30,16 @@ angular.module('diagnostic')
 				component: 'myMedicine'
 			})
 			.state({
+				name: 'home.monitoring',
+				url: 'monitoring',
+				component: 'myMonitoring'
+			})
+			.state({
+				name: 'home.reports',
+				url: 'reports',
+				component: 'myReports'
+			})
+			.state({
 				name: 'home.registration',
 				url: 'registration',
 				component: 'myRegistration'
