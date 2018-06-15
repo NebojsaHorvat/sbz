@@ -24,6 +24,7 @@ import drools.spring.example.disease.DiseaseType;
 import drools.spring.example.events.HeartBeatEvent;
 import drools.spring.example.events.Misfires;
 import drools.spring.example.events.Urination;
+import drools.spring.example.medicine.Message;
 
 public class DialisaTest {
 
@@ -52,6 +53,9 @@ public class DialisaTest {
 	     
 	     Misfires misfires = new Misfires();
 	     ksession2.setGlobal("misfires", misfires);
+	     Message customMessage = new Message();
+	     ksession2.setGlobal("customMessage", customMessage);
+	     
 	     SessionPseudoClock clock = ksession2.getSessionClock();
 	     for (int index = 0; index < 9; index++) {
 	            Urination urin = new Urination(5);
@@ -81,6 +85,9 @@ public class DialisaTest {
 	     
 	     Misfires misfires = new Misfires();
 	     ksession2.setGlobal("misfires", misfires);
+	     Message customMessage = new Message();
+	     ksession2.setGlobal("customMessage", customMessage);
+	     
 	     SessionPseudoClock clock = ksession2.getSessionClock();
 	     for (int index = 0; index < 9; index++) {
 	            Urination urin = new Urination(5);

@@ -21,6 +21,7 @@ import org.kie.api.runtime.conf.ClockTypeOption;
 
 import drools.spring.example.events.HeartBeatEvent;
 import drools.spring.example.events.Misfires;
+import drools.spring.example.medicine.Message;
 
 public class HeartBeatTest {
 
@@ -48,6 +49,9 @@ public class HeartBeatTest {
 	     
 	     Misfires misfires = new Misfires();
 	     ksession2.setGlobal("misfires", misfires);
+	     Message customMessage = new Message();
+	     ksession2.setGlobal("customMessage", customMessage);
+	     
 	     SessionPseudoClock clock = ksession2.getSessionClock();
 	        for (int index = 0; index < 30; index++) {
 	            HeartBeatEvent beep = new HeartBeatEvent();
@@ -55,6 +59,7 @@ public class HeartBeatTest {
 	            clock.advanceTime(1, TimeUnit.SECONDS);
 	            int ruleCount = ksession2.fireAllRules();
 	        }
+	        System.out.println(customMessage.message);
 	        assertThat(misfires.count, equalTo(0));
 	 }
 	 
@@ -65,6 +70,8 @@ public class HeartBeatTest {
 	     
 	     Misfires misfires = new Misfires();
 	     ksession2.setGlobal("misfires", misfires);
+	     Message customMessage = new Message();
+	     ksession2.setGlobal("customMessage", customMessage);
 	     SessionPseudoClock clock = ksession2.getSessionClock();
 	        for (int index = 0; index < 30; index++) {
 	            HeartBeatEvent beep = new HeartBeatEvent();
@@ -72,6 +79,7 @@ public class HeartBeatTest {
 	            clock.advanceTime(200, TimeUnit.MILLISECONDS);
 	            int ruleCount = ksession2.fireAllRules();
 	        }
+	        System.out.println(customMessage.message);
 	        assertNotEquals(0, misfires.count);
 	 }
 }

@@ -23,6 +23,7 @@ import org.kie.api.runtime.conf.ClockTypeOption;
 import drools.spring.example.events.HeartBeatEvent;
 import drools.spring.example.events.Misfires;
 import drools.spring.example.events.OxygenLvl;
+import drools.spring.example.medicine.Message;
 
 public class OxigenLvlTest {
 
@@ -52,6 +53,8 @@ public class OxigenLvlTest {
 	     
 	     Misfires misfires = new Misfires();
 	     ksession2.setGlobal("misfires", misfires);
+	     Message customMessage = new Message();
+	     ksession2.setGlobal("customMessage", customMessage);
 	    
 	     SessionPseudoClock clock = ksession2.getSessionClock();
 	     int count = 60;
@@ -72,6 +75,8 @@ public class OxigenLvlTest {
 	     Misfires misfires = new Misfires();
 	     misfires.count = 0;
 	     ksession2.setGlobal("misfires", misfires);
+	     Message customMessage = new Message();
+	     ksession2.setGlobal("customMessage", customMessage);
 	    
 	     int count = 70;
 	     

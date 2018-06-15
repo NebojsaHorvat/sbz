@@ -8,12 +8,13 @@ import drools.spring.example.events.OxygenLvl;
 import drools.spring.example.events.CustomEvent;
 import drools.spring.example.events.CustomEventType;
 import drools.spring.example.events.Urination;
+import drools.spring.example.medicine.Message;
 
 
 //declare any global variables here
 
 global Misfires misfires;
-
+global Message customMessage;
 
 rule "Ubrzan_rad"
     when
@@ -23,6 +24,7 @@ rule "Ubrzan_rad"
        )
     then
        System.out.println("Number of heartBeats in 10s :"+$n);
+       customMessage.message = customMessage.message + "," + "Number of heartBeats in 10s :"+$n;
        misfires.count++;
 
 end
@@ -35,6 +37,7 @@ rule "Problem sa kiseonikom"
     	OxygenLvl() over window:time (2m)
     then
        System.out.println("Problem sa kiseonikom ");
+       customMessage.message = customMessage.message + "," +"Problem sa kiseonikom ";
        misfires.count++;
 
 end
@@ -79,6 +82,8 @@ rule "Hitna dijaliza"
     then
     	System.out.println("Potrebna hitna dijaliza ");
        	misfires.count++;
+       	customMessage.message = customMessage.message + "," +"Potrebna hitna dijaliza ";
+       	
 
 end
 
