@@ -7,18 +7,21 @@ angular.module('monitoring')
 
 			
 			this.oxygenLvl = () => {
-				MonitoringService.getHeartBeat()
+				MonitoringService.getOxygen()
 				.then( (response) => {
-					this.results = response.data;
+					this.results = response.data.message;
+					this.results = this.results.split(",").join("\n")
 				}, () => {
 					this.results = null;
 				});
 			}
 			
 			this.heartMonitoring = () => {
-				MonitoringService.getOxygen()
+				MonitoringService.getHeartBeat()
 				.then( (response) => {
-					this.results = response.data;
+					this.results = response.data.message;
+					
+					this.results = this.results.split(",").join("\n")
 				}, () => {
 					this.results = null;
 				});
@@ -27,7 +30,9 @@ angular.module('monitoring')
 			this.dialisa = () => {
 				MonitoringService.getDialisa()
 				.then( (response) => {
-					this.results = response.data;
+					this.results = response.data.message;
+					
+					this.results = this.results.split(",").join("\n")
 				}, () => {
 					this.results = null;
 				});

@@ -29,6 +29,14 @@ rule "Ubrzan_rad"
 
 end
 
+rule "Halt"
+    when
+       not HeartBeatEvent() over window:time (5s)
+    then
+       drools.halt();
+
+end
+
 rule "Problem sa kiseonikom"
     when
     	// Nivo je "sad" manji od 70
@@ -53,6 +61,7 @@ salience 100
 	    	OxygenLvl lvl1 = (OxygenLvl) $events.get(1);
 	        if( lvl0.value < lvl1.value){
 	       		System.out.println("!!!!!! NIVO PORASTIO !!!!!!!!");
+	       		customMessage.message = customMessage.message + "," +"NIVO PORASTIO ";
 	       		CustomEvent c = new CustomEvent();
 	       		c.customEventType = CustomEventType.OXIGEN_LVL_RISING;
 	       		insert(c);
