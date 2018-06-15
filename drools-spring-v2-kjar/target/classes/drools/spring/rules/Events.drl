@@ -4,6 +4,10 @@ package drools.spring.rules
 
 import drools.spring.example.events.HeartBeatEvent;
 import drools.spring.example.events.Misfires;
+import drools.spring.example.events.OxygenLvl;
+import drools.spring.example.events.CustomEvent;
+import drools.spring.example.events.CustomEventType;
+import drools.spring.example.events.Urination;
 
 
 //declare any global variables here
@@ -12,7 +16,6 @@ global Misfires misfires;
 
 
 rule "Ubrzan_rad"
-//agenda-group "heartBeat"
     when
        $n: Number (intValue >= 25) from accumulate(
        		HeartBeatEvent() over window:time (10s),
@@ -23,3 +26,63 @@ rule "Ubrzan_rad"
        misfires.count++;
 
 end
+
+rule "Problem sa kiseonikom"
+    when
+    	// Nivo je "sad" manji od 70
+       	not OxygenLvl( value > 70 ) over window:time (2m)
+       	not CustomEvent( customEventType == CustomEventType.OXIGEN_LVL_RISING ) over window:time (15m)
+    	OxygenLvl() over window:time (2m)
+    then
+       System.out.println("Problem sa kiseonikom ");
+       misfires.count++;
+
+end
+
+rule "Nivo raste"
+salience 100
+    when
+    	accumulate ( $e: OxygenLvl() over window : length(2),
+    				$events : collectList( $e ) )
+    then
+    	if($events.size()  == 2){
+	    	OxygenLvl lvl0 = (OxygenLvl) $events.get(0);
+	    	OxygenLvl lvl1 = (OxygenLvl) $events.get(1);
+	        if( lvl0.value < lvl1.value){
+	       		System.out.println("!!!!!! NIVO PORASTIO !!!!!!!!");
+	       		CustomEvent c = new CustomEvent();
+	       		c.customEventType = CustomEventType.OXIGEN_LVL_RISING;
+	       		insert(c);
+	        }
+       }else{
+       			System.out.println("!!!!!! NIVO PORASTIO !!!!!!!!");
+	       		CustomEvent c = new CustomEvent();
+	       		c.customEventType = CustomEventType.OXIGEN_LVL_RISING;
+	       		insert(c);
+       }
+
+end
+
+
+rule "Hitna dijaliza"
+    when
+	    Number (intValue >= 9) from accumulate(
+	       		HeartBeatEvent() over window:time (10s),
+	       		count(1)
+	       )
+    	Number (intValue < 100) from accumulate(
+	       		Urination($amm : amount) over window:time (12h),
+	       		sum($amm)
+	       )
+	    Disease(diseaseType == DiseaseType.HRONICNA_BUBREZNA_BOLEST || 
+	   		diseaseType == DiseaseType.AKUTNA_BUBREZNA_BOLEST ) 
+    then
+    	System.out.println("Potrebna hitna dijaliza ");
+       	misfires.count++;
+
+end
+
+
+
+
+

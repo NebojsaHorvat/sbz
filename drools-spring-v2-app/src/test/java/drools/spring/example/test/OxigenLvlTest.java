@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import org.drools.core.ClockType;
@@ -21,10 +22,11 @@ import org.kie.api.runtime.conf.ClockTypeOption;
 
 import drools.spring.example.events.HeartBeatEvent;
 import drools.spring.example.events.Misfires;
+import drools.spring.example.events.OxygenLvl;
 
-public class HeartBeatTest {
+public class OxigenLvlTest {
 
-	 private KieSession createSessionWithPseudoClock() {
+	private KieSession createSessionWithPseudoClock() {
 		 
 		 KieServices ks = KieServices.Factory.get();
 		 KieContainer kContainer = ks.newKieContainer(ks.newReleaseId("drools-spring-v2","drools-spring-v2-kjar", "0.0.1-SNAPSHOT"));
@@ -41,37 +43,47 @@ public class HeartBeatTest {
 	     
 	     return ksession2;
 	 }
+	
+	
 	 @Test
-	 public void testHeartBeat() {
+	 public void testOxigetLvl() {
 		 
 	     KieSession ksession2 = createSessionWithPseudoClock();
 	     
 	     Misfires misfires = new Misfires();
 	     ksession2.setGlobal("misfires", misfires);
+	    
 	     SessionPseudoClock clock = ksession2.getSessionClock();
+	     int count = 60;
 	        for (int index = 0; index < 30; index++) {
-	            HeartBeatEvent beep = new HeartBeatEvent();
-	            ksession2.insert(beep);
-	            clock.advanceTime(1, TimeUnit.SECONDS);
+	        	OxygenLvl lvl = new OxygenLvl(count++);
+	            ksession2.insert(lvl);
+	            clock.advanceTime(1, TimeUnit.MINUTES);
 	            int ruleCount = ksession2.fireAllRules();
 	        }
 	        assertThat(misfires.count, equalTo(0));
 	 }
 	 
 	 @Test
-	 public void testHeartBeatToHigh() {
+	 public void testOxigetLvlNotWorking() {
 		 
-		 KieSession ksession2 = createSessionWithPseudoClock();
+	     KieSession ksession2 = createSessionWithPseudoClock();
 	     
 	     Misfires misfires = new Misfires();
+	     misfires.count = 0;
 	     ksession2.setGlobal("misfires", misfires);
+	    
+	     int count = 70;
+	     
+	     count= 70;
 	     SessionPseudoClock clock = ksession2.getSessionClock();
-	        for (int index = 0; index < 30; index++) {
-	            HeartBeatEvent beep = new HeartBeatEvent();
-	            ksession2.insert(beep);
-	            clock.advanceTime(200, TimeUnit.MILLISECONDS);
-	            int ruleCount = ksession2.fireAllRules();
-	        }
-	        assertNotEquals(0, misfires.count);
+         for (int index = 0; index < 30; index++) {
+        	 OxygenLvl lvl = new OxygenLvl(count--);
+             ksession2.insert(lvl);
+             clock.advanceTime(1, TimeUnit.MINUTES);
+             int ruleCount = ksession2.fireAllRules();
+         }
+	     assertNotEquals(0, misfires.count);
 	 }
+	
 }
