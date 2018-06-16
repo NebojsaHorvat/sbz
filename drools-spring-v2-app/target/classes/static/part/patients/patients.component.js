@@ -49,6 +49,20 @@ angular.module('patients')
 					});
 				}
 			}
+			
+			
+			this.deletePatient = (patient) =>{
+				
+				PatientsService.deletePatient(patient)
+				.then( (response) => {
+					var pac = response.data;
+					this.patients= this.patients.filter(function(el){
+						return el.id != pac.id;
+					});
+				}, () => {
+					alert("Pacient ne moze biti obrisan")
+				});
+			}
 
 		}
 	});

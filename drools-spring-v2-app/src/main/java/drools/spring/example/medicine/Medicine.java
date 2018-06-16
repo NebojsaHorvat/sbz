@@ -27,6 +27,8 @@ public class Medicine {
 	
 	private String name;
 	
+	private boolean deleted = false;
+	
 	public Medicine () {}
 
 	public Medicine(MedicineType medicineType, String substances, String name) {
@@ -34,6 +36,14 @@ public class Medicine {
 		this.medicineType = medicineType;
 		this.substances = substances;
 		this.name = name;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public String getName() {

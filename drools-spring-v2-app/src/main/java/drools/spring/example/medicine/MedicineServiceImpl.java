@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import drools.spring.example.patient.Patient;
 import drools.spring.example.patient.PatientService;
-import drools.spring.example.symptom.SymptomType;
 
 @Transactional(readOnly = true)
 @Service
@@ -32,11 +31,20 @@ public class MedicineServiceImpl implements MedicineService{
     }
 	
 	public Medicine findOne(Long id) {
-		return medicineRepository.findById(id).get();
+		return  medicineRepository.findById(id).get();
+		
 	}
 
 	public List<Medicine> findAll() {
-		return medicineRepository.findAll();
+		List<Medicine> medicines = medicineRepository.findAll();
+		List<Medicine> ret = new ArrayList<Medicine>();
+		for(Medicine m :medicines) {
+			if(m.isDeleted())
+				continue;
+			ret.add(m);
+		}
+		return ret;
+		
 	}
 
 	@Transactional(readOnly = false)
@@ -83,6 +91,20 @@ public class MedicineServiceImpl implements MedicineService{
 			}
 		}
 		return message;
+	}
+
+	@Transactional(readOnly = false)
+	public Medicine delete(Long id) {
+		Medicine medicine = findOne(id);
+		if(medicine == null)
+			return null;
+		try {
+		medicine.setDeleted(true);
+		medicineRepository.save(medicine);
+		}catch(Exception e) {
+			return null;
+		}
+		return medicine;
 	}
 
 	

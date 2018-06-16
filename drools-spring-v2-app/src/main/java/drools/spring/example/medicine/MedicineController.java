@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,6 +58,20 @@ public class MedicineController {
 			return new ResponseEntity<Medicine>(HttpStatus.FORBIDDEN);
 		
 		Medicine medicine = medicineService.findOne(id);
+		if(medicine == null)
+			return new ResponseEntity<Medicine>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Medicine>(medicine,HttpStatus.OK);
+	}
+	@DeleteMapping("/{id:\\d+}")
+	public ResponseEntity<Medicine> delete(@PathVariable Long id){
+		
+		User user = (User) session.getAttribute("user");
+		if(user == null)
+			return new ResponseEntity<Medicine>(HttpStatus.FORBIDDEN);
+		if(user.getUserType() != UserType.DOCTOR)
+			return new ResponseEntity<Medicine>(HttpStatus.FORBIDDEN);
+		
+		Medicine medicine = medicineService.delete(id);
 		if(medicine == null)
 			return new ResponseEntity<Medicine>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<Medicine>(medicine,HttpStatus.OK);

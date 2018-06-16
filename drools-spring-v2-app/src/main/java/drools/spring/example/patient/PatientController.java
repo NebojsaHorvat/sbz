@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import drools.spring.example.medicine.Medicine;
 import drools.spring.example.medicine.Message;
 import drools.spring.example.users.User;
 import drools.spring.example.users.UserType;
@@ -71,6 +71,22 @@ public class PatientController {
 		
 		
 		Patient patient = patientService.add(input);
+		if(patient == null)
+			return new ResponseEntity<Patient>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Patient>(patient,HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/{id:\\d+}")
+	public ResponseEntity<Patient> delete (@PathVariable Long id)
+	{
+		User user = (User) session.getAttribute("user");
+		if(user == null)
+			return new ResponseEntity<Patient>(HttpStatus.FORBIDDEN);
+		if(user.getUserType() != UserType.DOCTOR)
+			return new ResponseEntity<Patient>(HttpStatus.FORBIDDEN);
+		
+		
+		Patient patient = patientService.delete(id); 
 		if(patient == null)
 			return new ResponseEntity<Patient>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<Patient>(patient,HttpStatus.OK);

@@ -32,6 +32,8 @@ public class Patient {
 
 	private String alergicSubstances;
 	
+	private boolean deleted = false;
+	
 	//@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -52,6 +54,14 @@ public class Patient {
 	}
 
 	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public String getAlergicSubstances() {
 		return alergicSubstances;
 	}

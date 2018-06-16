@@ -12,6 +12,9 @@ angular.module('core.patients')
 		this.add = (patient) => {
 			return $http.post('/api/patients',patient);
 		};
+		this.deletePatient = (patient) => {
+			return $http.delete('/api/patients/'+patient.id);
+		};
 		this.getChronical = () => {
 			return $http.get('/api/patients/chronical');
 		};

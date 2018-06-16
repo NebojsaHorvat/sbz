@@ -100,7 +100,7 @@ public class TestData {
 		}
 		
 		for(int i=0 ;i < 6 ;i ++) {
-			Prescription p = new Prescription(p3, disease1, user1, m1);
+			Prescription p = new Prescription(p3, disease1, user1, m2);
 			if(i%3 == 0)
 				p.setUser(user1);
 			else if(i%3 == 1)

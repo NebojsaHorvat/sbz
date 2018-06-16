@@ -18,5 +18,8 @@ angular.module('core.medicine')
 			return $http.get('/api/medicine/prescribe/'+patientId+'/'+ medicineId +'/'+dieaseId);
 			
 		};
+		this.deleteMedicine = (id) =>{
+			return $http.delete('/api/medicine/'+id);
+		};
 		
 	});

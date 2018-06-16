@@ -13,4 +13,6 @@ public interface MedicineService {
 	Medicine add(Medicine medicine);
 	
 	String checkAlergies(Long patientId, Long medicineId);
+
+	Medicine delete(Long id);
 }

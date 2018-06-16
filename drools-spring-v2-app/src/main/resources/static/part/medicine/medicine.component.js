@@ -40,6 +40,17 @@ angular.module('medicine')
 					alert("Error")
 				});
 			}
+			this.deleteMedicine = (medicine ) =>{
+				MedicineService.deleteMedicine(medicine.id)
+				.then( (response) =>{
+					var med = response.data;
+					this.medicines= this.medicines.filter(function(el){
+						return el.id != med.id;
+					});
+				},() =>{
+					alert("Greska pri brisanju leka")
+				});
+			}
 			
 		}
 	});

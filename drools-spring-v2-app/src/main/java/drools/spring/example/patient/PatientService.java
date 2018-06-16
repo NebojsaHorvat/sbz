@@ -19,6 +19,8 @@ public interface PatientService {
 	Message getAdiction();
 
 	Message getImmunity();
+
+	Patient delete(Long id);
 	
 	
 	

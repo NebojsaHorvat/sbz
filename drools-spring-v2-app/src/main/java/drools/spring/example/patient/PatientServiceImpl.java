@@ -1,5 +1,6 @@
 package drools.spring.example.patient;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -44,13 +45,36 @@ public class PatientServiceImpl implements PatientService{
 	}
 
 	public List<Patient> findAll() {
-		return patientRepository.findAll();
+		List<Patient> patients = patientRepository.findAll();
+		List<Patient> ret = new ArrayList<Patient>();
+		for(Patient p: patients) {
+			if(p.isDeleted())
+				continue;
+			ret.add(p);
+		}
+		return ret;
+		
 	}
 
 	@Transactional(readOnly = false)
 	public Patient add(Patient patient) {
 		return patientRepository.save(patient);
 		
+	}
+	
+	@Transactional(readOnly = false)
+	public Patient delete(Long id) {
+		
+		Patient patient = null;
+		try {
+			patient =findOne(id);
+			patient.setDeleted(true);
+			patientRepository.save(patient);
+			
+		}catch(Exception e) {
+			return null;
+		}
+		return patient;
 	}
 
 	@Transactional(readOnly = false)
@@ -121,7 +145,7 @@ public class PatientServiceImpl implements PatientService{
 	    for(Prescription p : prescriptions)
 	    	kieSession.insert(p);
 	    
-	    kieSession.getAgenda().getAgendaGroup("reports").setFocus();
+	    kieSession.getAgenda().getAgendaGroup("imunitet").setFocus();
 	    kieSession.fireAllRules();
         kieSession.dispose();
 	    Message customMessage = new Message();
@@ -130,5 +154,6 @@ public class PatientServiceImpl implements PatientService{
         }
 	    return customMessage;
 	}
+	
 	
 }

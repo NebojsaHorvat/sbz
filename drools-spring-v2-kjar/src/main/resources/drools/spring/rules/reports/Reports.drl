@@ -85,7 +85,7 @@ end
 
 
 rule "Slab imunitet "
-agenda-group "reports"
+agenda-group "imunitet"
     when
     	$p :Patient()
     	$listOfPrescriptions: List() from collect(
