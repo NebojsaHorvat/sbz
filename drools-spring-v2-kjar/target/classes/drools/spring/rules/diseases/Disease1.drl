@@ -16,33 +16,33 @@ global java.util.List diseaseList;
 rule "Prehlada"
 
     when
-        accumulate(
+       $c:Number (intValue >= 4) from accumulate(
         	Symptom( 
         	symptomType == SymptomType.CURENJE_NOSA ||
         	symptomType == SymptomType.BOL_U_GRLU ||
         	symptomType == SymptomType.GLAVOBOLJA ||
         	symptomType == SymptomType.KIJANJE ||
         	symptomType == SymptomType.KASLJANJE 
-        	),$c: count(1)
+        	), count(1)
         )
     then
-    	if($c >= 4){
-	    	Disease disease = new Disease();
-	    	disease.setDiseaseGroup(1);
-	    	disease.setDiseaseType(DiseaseType.PREHLADA);
-	    	disease.setChance($c/5.0);
-	    	disease.setNumberOfSymptoms($c);
-	    	System.out.println("Usao u PREHLADA "+ $c/5.0);
-	    	
-	        diseaseList.add(disease);
-	    }
+    	Long c = (long)$c;
+    	Disease disease = new Disease();
+    	disease.setDiseaseGroup(1);
+    	disease.setDiseaseType(DiseaseType.PREHLADA);
+    	disease.setChance(c/5.0);
+    	disease.setNumberOfSymptoms(c);
+    	System.out.println("Usao u PREHLADA "+ c/5.0);
+    	
+        diseaseList.add(disease);
+	    
 
 end
 
 rule "Groznica"
 
     when
-        accumulate(
+        $c:Number (intValue >= 4) from accumulate(
         	Symptom( 
         	symptomType == SymptomType.KIJANJE ||
         	symptomType == SymptomType.BOL_U_GRLU ||
@@ -51,25 +51,25 @@ rule "Groznica"
         	symptomType == SymptomType.CURENJE_IZ_NOSA ||
         	symptomType == SymptomType.GLAVOBOLJA ||
         	symptomType == SymptomType.DRHTAVICA 
-        	),$c: count(1)
+        	),count(1)
         )
     then
-    	if($c >= 4){
-	    	Disease disease = new Disease();
-	    	disease.setDiseaseGroup(1);
-	    	disease.setDiseaseType(DiseaseType.GROZNICA);
-	    	disease.setChance($c/8.0);	    	
-	    	disease.setNumberOfSymptoms($c);
-	    	System.out.println("Usao u GROZNICA "+ $c/8.0);
-	    	
-	        diseaseList.add(disease);
-        }
+    	Long c = (long)$c;
+    	Disease disease = new Disease();
+    	disease.setDiseaseGroup(1);
+    	disease.setDiseaseType(DiseaseType.GROZNICA);
+    	disease.setChance(c/8.0);	    	
+    	disease.setNumberOfSymptoms(c);
+    	System.out.println("Usao u GROZNICA "+ c/8.0);
+    	
+        diseaseList.add(disease);
+        
 end
 
 rule "Upala krajnika"
 
     when
-        accumulate(
+        $c:Number (intValue >= 4) from accumulate(
         	Symptom( 
         	symptomType == SymptomType.BOL_U_GRLU ||
         	symptomType == SymptomType.BOL_KOJI_SE_SIRI_OKO_USIJU ||
@@ -79,19 +79,19 @@ rule "Upala krajnika"
         	symptomType == SymptomType.GUBLJENJE_APETITA ||
         	symptomType == SymptomType.UMOR ||
         	symptomType == SymptomType.ZUTI_SEKRET_IZ_NOSA 
-        	),$c: count(1)
+        	), count(1)
         )
     then
-    	if($c >= 4){
-	    	Disease disease = new Disease();
-	    	disease.setDiseaseGroup(1);
-	    	disease.setDiseaseType(DiseaseType.UPALA_KRAJNIKA);
-	    	disease.setChance($c/8.0);
-	    	disease.setNumberOfSymptoms($c);
-	    	System.out.println("Usao u UPALA_KRAJNIKA "+ $c/8.0);
-	    	
-	        diseaseList.add(disease);
-        }
+    	Long c = (long)$c;
+    	Disease disease = new Disease();
+    	disease.setDiseaseGroup(1);
+    	disease.setDiseaseType(DiseaseType.UPALA_KRAJNIKA);
+    	disease.setChance(c/8.0);
+    	disease.setNumberOfSymptoms(c);
+    	System.out.println("Usao u UPALA_KRAJNIKA "+ c/8.0);
+    	
+        diseaseList.add(disease);
+        
 end
 
 
@@ -99,6 +99,7 @@ rule "Bolovao od preglade/groznice u 60 dana"
 salience 100
     when
     	$d: Disease( diseaseType == DiseaseType.GROZNICA || diseaseType == DiseaseType.GROZNICA)
+    	not Symptom( symptomType == SymptomType.I_PREHLADA_GROZNICA_60_DANA)
     then
     	Long now =  System.currentTimeMillis();
     	Long before60Day = now - 60*24*3600*1000; // dana*sati*sekund u satu*mili
@@ -116,7 +117,7 @@ rule "Sinusna infekcija"
 
     when
     	Symptom( symptomType == SymptomType.I_PREHLADA_GROZNICA_60_DANA)
-        accumulate(
+         $c:Number (intValue >= 4) from accumulate(
         	Symptom( 
         	symptomType == SymptomType.OTICANJE_OKO_OCIJU ||
         	symptomType == SymptomType.GLAVOBOLJA ||
@@ -124,19 +125,19 @@ rule "Sinusna infekcija"
         	symptomType == SymptomType.BOL_U_GLAVI ||
         	symptomType == SymptomType.TEMPERATURA_38 ||
         	symptomType == SymptomType.KASLJANJE
-        	),$c: count(1)
+        	), count(1)
         )
     then
-    	if($c >= 4){
-	    	Disease disease = new Disease();
-	    	disease.setDiseaseGroup(1);
-	    	disease.setDiseaseType(DiseaseType.SINUSNA_INFEKCIJA);
-	    	disease.setChance(($c+1)/7.0);
-	    	disease.setNumberOfSymptoms($c);
-	    	System.out.println("Usao u SINUSNA_INFEKCIJA "+ ($c+1)/7.0);
-	    	
-	        diseaseList.add(disease);
-        }
+    	Long c = (long)$c;
+    	Disease disease = new Disease();
+    	disease.setDiseaseGroup(1);
+    	disease.setDiseaseType(DiseaseType.SINUSNA_INFEKCIJA);
+    	disease.setChance((c+1)/7.0);
+    	disease.setNumberOfSymptoms(c);
+    	System.out.println("Usao u SINUSNA_INFEKCIJA "+ (c+1)/7.0);
+    	
+        diseaseList.add(disease);
+        
 end
 
 

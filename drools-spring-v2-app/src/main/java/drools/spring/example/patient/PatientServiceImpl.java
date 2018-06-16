@@ -44,6 +44,7 @@ public class PatientServiceImpl implements PatientService{
 	@Transactional(readOnly = false)
 	public Patient add(Patient patient) {
 		return patientRepository.save(patient);
+		
 	}
 
 	@Transactional(readOnly = false)
