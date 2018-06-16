@@ -49,26 +49,26 @@ rule "Hornicna bubrezna bolest"
 no-loop
     when
     	Symptom( symptomType == SymptomType.I_SPEC_HRONICNA_BUBREZNA)
-    	accumulate(
+    	$c:Number (intValue >= 2) from accumulate(
         	Symptom( 
         	symptomType == SymptomType.ZAMOR ||
         	symptomType == SymptomType.NOCTURIA ||
         	symptomType == SymptomType.OTICANJE_NOGU_I_ZGLOBOVA ||
         	symptomType == SymptomType.GUSENJE ||
         	symptomType == SymptomType.BOL_U_GRUDIMA
-        	),$c: count(1)
+        	), count(1)
         )
     then
-    	if($c >=2 ){
-	    	Disease disease = new Disease();
-	    	disease.setDiseaseGroup(3);
-	    	disease.setDiseaseType(DiseaseType.HRONICNA_BUBREZNA_BOLEST);
-	    	disease.setChance(($c+1)/6.0);
-	    	disease.setNumberOfSymptoms($c+1);
-	    	System.out.println("Usao u HRONICNA_BUBREZNA_BOLEST");
-	    	
-	        diseaseList.add(disease);
-        }
+    	Long c = (long)$c;
+    	Disease disease = new Disease();
+    	disease.setDiseaseGroup(3);
+    	disease.setDiseaseType(DiseaseType.HRONICNA_BUBREZNA_BOLEST);
+    	disease.setChance((c+1)/6.0);
+    	disease.setNumberOfSymptoms(c+1);
+    	System.out.println("Usao u HRONICNA_BUBREZNA_BOLEST");
+    	
+        diseaseList.add(disease);
+        
         
 end
 
@@ -136,24 +136,24 @@ rule "Akutna bubrezna bolest"
 no-loop
     when
     	Symptom( symptomType == SymptomType.I_SPEC_AKUTNA_BUBREZNA)
-    	accumulate(
+    	$c:Number (intValue >= 2) from accumulate(
         	Symptom( 
         	symptomType == SymptomType.ZAMOR ||
         	symptomType == SymptomType.GUSENJE ||
         	symptomType == SymptomType.OTICANJE_NOGU_I_ZGLOBOVA ||
         	symptomType == SymptomType.DIJAREJA 
-        	),$c: count(1)
+        	), count(1)
         )
     then
-    	if($c >=2 ){
-	    	Disease disease = new Disease();
-	    	disease.setDiseaseGroup(3);
-	    	disease.setDiseaseType(DiseaseType.AKUTNA_BUBREZNA_BOLEST);
-	    	disease.setChance(($c+1)/5.0);
-	    	disease.setNumberOfSymptoms($c+1);
-	    	System.out.println("Usao u AKUTNA_BUBREZNA_BOLEST");
-	    	
-	        diseaseList.add(disease);
-        }
+    	Long c = (long)$c;
+    	Disease disease = new Disease();
+    	disease.setDiseaseGroup(3);
+    	disease.setDiseaseType(DiseaseType.AKUTNA_BUBREZNA_BOLEST);
+    	disease.setChance((c+1)/5.0);
+    	disease.setNumberOfSymptoms(c+1);
+    	System.out.println("Usao u AKUTNA_BUBREZNA_BOLEST");
+    	
+        diseaseList.add(disease);
+        
         
 end
