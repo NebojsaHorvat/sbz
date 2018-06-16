@@ -57,7 +57,7 @@ public class DiseaseServiceImpl implements DiseaseService{
 	@Transactional(readOnly = false)
 	public List<Disease> getMostLickelyDiseases(List<Symptom> symptoms,Patient patient) {
 		List<Disease> diseases = new ArrayList<Disease>();
-		KieSession kieSession = kieContainer.newKieSession();
+		KieSession kieSession = kieContainer.newKieSession("diseasesSession");
 	    kieSession.setGlobal("diseaseList", diseases);
 	    Long now1 = System.currentTimeMillis();
 	    kieSession.setGlobal("now1", now1);
@@ -83,7 +83,7 @@ public class DiseaseServiceImpl implements DiseaseService{
 	
 	public List<SymptomType> getDiseaseSymptoms(Disease disease) {
 		List<SymptomType> symptomTypes = new ArrayList<SymptomType>();
-		KieSession kieSession = kieContainer.newKieSession();
+		KieSession kieSession = kieContainer.newKieSession("diseasesSession");
 	    kieSession.setGlobal("symptomTypes", symptomTypes);
 	    kieSession.insert(disease);
 	    kieSession.getAgenda().getAgendaGroup("diseaseSymptoms").setFocus();

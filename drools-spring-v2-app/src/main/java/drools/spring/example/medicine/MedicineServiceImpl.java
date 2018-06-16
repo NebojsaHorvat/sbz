@@ -53,7 +53,7 @@ public class MedicineServiceImpl implements MedicineService{
 			return null;
 		
 		Message retMessage = new Message();
-		KieSession kieSession = kieContainer.newKieSession();
+		KieSession kieSession = kieContainer.newKieSession("diseasesSession");
 	    kieSession.setGlobal("retMessage", retMessage);
 	    kieSession.insert(patient);
 	    kieSession.insert(medicine);

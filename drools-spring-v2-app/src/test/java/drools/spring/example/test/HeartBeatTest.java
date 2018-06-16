@@ -32,14 +32,16 @@ public class HeartBeatTest {
 		 KieScanner kScanner = ks.newKieScanner(kContainer);
 		 kScanner.start(10000);
 		 
-		 KieBaseConfiguration kbconf = ks.newKieBaseConfiguration();
-	     kbconf.setOption(EventProcessingOption.STREAM);
-	     KieBase kbase = kContainer.newKieBase(kbconf);
-		 
-	     KieSessionConfiguration ksconf2 = ks.newKieSessionConfiguration();
-	     ksconf2.setOption(ClockTypeOption.get(ClockType.PSEUDO_CLOCK.getId()));
-	     KieSession ksession2 = kbase.newKieSession(ksconf2, null);
+//		 KieBaseConfiguration kbconf = ks.newKieBaseConfiguration();
+//	     kbconf.setOption(EventProcessingOption.STREAM);
+//	     KieBase kbase = kContainer.newKieBase(kbconf);
+//		 
+//	     KieSessionConfiguration ksconf2 = ks.newKieSessionConfiguration();
+//	     ksconf2.setOption(ClockTypeOption.get(ClockType.PSEUDO_CLOCK.getId()));
+//	     KieSession ksession2 = kbase.newKieSession(ksconf2, null);
 	     
+	     KieSession ksession2 = kContainer.newKieSession("eventSessionPseudoClock");
+
 	     return ksession2;
 	 }
 	 @Test

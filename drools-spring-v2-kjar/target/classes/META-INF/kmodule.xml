@@ -2,4 +2,16 @@
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule" 
 			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   
+ 	 <kbase name="rules1" packages="diseases">
+        <ksession name="diseasesSession"/>
+    </kbase>
+    
+    <kbase name="rules2" packages="reports">
+        <ksession name="reportsSession"/>
+    </kbase>
+    
+    <kbase name="rules3" eventProcessingMode="stream" packages="events">
+        <ksession name="eventSessionPseudoClock" clockType="pseudo"/>
+        <ksession name="eventSessionRealtimeClock" clockType="realtime"/>
+    </kbase>
 </kmodule>

@@ -9,6 +9,8 @@ import drools.spring.example.events.CustomEvent;
 import drools.spring.example.events.CustomEventType;
 import drools.spring.example.events.Urination;
 import drools.spring.example.medicine.Message;
+import drools.spring.example.disease.Disease;
+import drools.spring.example.disease.DiseaseType;
 
 
 //declare any global variables here

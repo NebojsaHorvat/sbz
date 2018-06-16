@@ -9,26 +9,30 @@ angular.module('reports')
 			this.chronical = () => {
 				PatientsService.getChronical()
 				.then( (response) => {
-					this.patients = response.data;
+					this.results = response.data.message;
+					this.results = this.results.split(",").join("\n")
 				}, () => {
-					this.patients = null;
+					this.results = null;
 				});
 			}
 			
 			this.addiction = () => {
 				PatientsService.getAddiction()
 				.then( (response) => {
-					this.patients = response.data;
+					this.results = response.data.message;
+					this.results = this.results.split(",").join("\n")
 				}, () => {
+					this.results = null;
 				});
 			}
 			
 			this.immunity = () => {
 				PatientsService.getImmunity()
 				.then( (response) => {
-					this.patients = response.data;
+					this.results = response.data.message;
+					this.results = this.results.split(",").join("\n")
 				}, () => {
-					this.patients = null;
+					this.results = null;
 				});
 			}
 			

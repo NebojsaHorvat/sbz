@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import drools.spring.example.medicine.Medicine;
+import drools.spring.example.medicine.Message;
 import drools.spring.example.users.User;
 import drools.spring.example.users.UserType;
 
@@ -74,5 +75,32 @@ public class PatientController {
 			return new ResponseEntity<Patient>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<Patient>(patient,HttpStatus.OK);
 	}
+	
+	@GetMapping("/chronical")
+	public ResponseEntity<Message> getChronical(){
+		
+	Message customMessage = patientService.getChronical();	
+    return new ResponseEntity<Message>(customMessage,HttpStatus.OK);	
+    
+	}
+	
+	@GetMapping("/addiction")
+	public ResponseEntity<Message> getAddiction(){
+		
+	Message customMessage = patientService.getAdiction();	
+    return new ResponseEntity<Message>(customMessage,HttpStatus.OK);	
+    
+	}
+	
+	@GetMapping("/immunity")
+	public ResponseEntity<Message> getImmunity(){
+		
+	Message customMessage = patientService.getImmunity();	
+    return new ResponseEntity<Message>(customMessage,HttpStatus.OK);	
+    
+	}
+	
+	
+	
 	
 }

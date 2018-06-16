@@ -7,19 +7,5 @@
 	ng-click="$ctrl.immunity()">Pacijenti sa slabim imunitetom</button> &nbsp&nbsp&nbsp
 <br>
 	
-<h1>Lista pacijenata :</h1>
-<div class="row no-gutters align-items-stretch">
-	<div ng-repeat="patient in $ctrl.patients "
-		class="card m-md-1 col-lg-4 col-md-6">
-			<div class="card-body">
-				<h3 class="card-title">
-					{{patient.surname}}
-				</h3>
-				<div class="card-subtitle mb-2 text-muted">
-					{{patient.name}}
-					
-				</div>
-				
-			</div>
-	</div>
-</div>
+<h1>Izvesta :</h1>
+<h3 style = "white-space:pre-wrap;" >{{$ctrl.results}}</h3>

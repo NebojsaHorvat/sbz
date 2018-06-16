@@ -76,6 +76,12 @@ public class TestData {
 		medicineService.add(m2);
 		p1.addAlergicMedicine(m2);
 		patientService.add(p1);
+		
+		for(int i = 0; i < 6; i++) {
+			Disease disease = new Disease(p2, DiseaseType.UPALA_KRAJNIKA
+					, 1529108027000L, 1, 3L, 1, user1);
+			diseaseService.add(disease);
+		}
 
 	}
 }

@@ -42,16 +42,18 @@ public class MonitoringController {
 		 KieScanner kScanner = ks.newKieScanner(kContainer);
 		 kScanner.start(10000);
 		 
-		 KieBaseConfiguration kbconf = ks.newKieBaseConfiguration();
-	     kbconf.setOption(EventProcessingOption.STREAM);
-	     KieBase kbase = kContainer.newKieBase(kbconf);
-		 
-	     KieSessionConfiguration ksconf2 = ks.newKieSessionConfiguration();
-	     ksconf2.setOption(ClockTypeOption.get(ClockType.PSEUDO_CLOCK.getId()));
-	     KieSession ksession2 = kbase.newKieSession(ksconf2, null);
+//		 KieBaseConfiguration kbconf = ks.newKieBaseConfiguration();
+//	     kbconf.setOption(EventProcessingOption.STREAM);
+//	     KieBase kbase = kContainer.newKieBase(kbconf);
+//		 
+//	     KieSessionConfiguration ksconf2 = ks.newKieSessionConfiguration();
+//	     ksconf2.setOption(ClockTypeOption.get(ClockType.PSEUDO_CLOCK.getId()));
+//	     KieSession ksession2 = kbase.newKieSession(ksconf2, null);
+	     
+	     KieSession ksession2 = kContainer.newKieSession("eventSessionPseudoClock");
 	     
 	     return ksession2;
-	 }
+	}
 	
 //	@GetMapping("/heartBeat")
 //	public ResponseEntity<Message> getAllSymptoms(){
@@ -78,18 +80,13 @@ public class MonitoringController {
 	@GetMapping("/heartBeat")
 	public ResponseEntity<Message> getAllSymptoms(){
 		
-		 KieServices ks = KieServices.Factory.get();
+		KieServices ks = KieServices.Factory.get();
 		 KieContainer kContainer = ks.newKieContainer(ks.newReleaseId("drools-spring-v2","drools-spring-v2-kjar", "0.0.1-SNAPSHOT"));
 		 KieScanner kScanner = ks.newKieScanner(kContainer);
 		 kScanner.start(10000);
 		 
-		 KieBaseConfiguration kbconf = ks.newKieBaseConfiguration();
-	     kbconf.setOption(EventProcessingOption.STREAM);
-	     KieBase kbase = kContainer.newKieBase(kbconf);
-		 
-	     KieSessionConfiguration ksconf1 = ks.newKieSessionConfiguration();
-         ksconf1.setOption(ClockTypeOption.get(ClockType.REALTIME_CLOCK.getId()));
-         final KieSession ksession = kbase.newKieSession(ksconf1, null);
+	     final KieSession ksession = kContainer.newKieSession("eventSessionRealtimeClock");
+
 	     	     
          Misfires misfires = new Misfires();
 	     ksession.setGlobal("misfires", misfires);
