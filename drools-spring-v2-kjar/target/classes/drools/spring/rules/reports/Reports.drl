@@ -10,7 +10,11 @@ import drools.spring.example.prescription.Prescription;
 import drools.spring.example.medicine.MedicineType;
 import drools.spring.example.medicine.Medicine;
 import drools.spring.example.medicine.Message;
-
+import drools.spring.example.patient.Patient;
+import drools.spring.example.prescription.Prescription;
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 //declare any global variables here
 
@@ -37,16 +41,44 @@ agenda-group "reports"
     	
     then
     	
-	    	System.out.println("Pacijent "+ $p.getName()+ " " + $p.getSurname() +
-	    		" verovatno hornicno boluje od " + $d.getDiseaseType());
-
 	    	stringSet.add(
 	    	"Pacijent "+ $p.getName()+ " "+ $p.getSurname() +
 	    	" verovatno hornicno boluje od " + $d.getDiseaseType()+
 	    	" zato sto je bolovao od nje " + $n+" puta u poslednjih 2 god"
-	    	);
-    	
-        
+	    	);      
 end
 
+
+rule "Spisak zavisnika "
+agenda-group "reports"
+    when
+    	$p :Patient()
+    	$listOfPrescriptions: List() from collect(
+        	Prescription(
+        		$p == patient,
+        		medicine.medicineType == MedicineType.ANALGETIK,
+        		disease.timeStamp  > (nowGlobal - 6*30*24*3600*10000)
+        	)
+        )
+    	eval($listOfPrescriptions.size() >= 5)
+    	
+    	$setDoctors: Set() from accumulate(
+            Prescription($d : user) from $listOfPrescriptions,
+            init(Set doctors = new HashSet();),
+            action(doctors.add($d);),
+            result(doctors)
+        )
+        eval ($setDoctors.size() >= 3)
+    	
+    then
+    
+        System.out.println("ZAVISNIK "+  $p.getSurname() + " broj: "+ $listOfPrescriptions.size() );
+    
+    	stringSet.add(
+	    	"Pacijent "+ $p.getName()+ " "+ $p.getSurname() +
+	    	" je verovatno zavisan od antibiotika "+
+	    	" zato sto ga je u 6 meseci primion " + $listOfPrescriptions.size()+" puta "
+	    	); 
+    
+end
 

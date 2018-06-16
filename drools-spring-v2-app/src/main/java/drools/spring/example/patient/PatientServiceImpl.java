@@ -1,6 +1,5 @@
 package drools.spring.example.patient;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import drools.spring.example.disease.Disease;
 import drools.spring.example.disease.DiseaseService;
 import drools.spring.example.medicine.Message;
+import drools.spring.example.prescription.Prescription;
+import drools.spring.example.prescription.PrescriptionService;
 
 @Transactional(readOnly = true)
 @Service
@@ -24,6 +25,12 @@ public class PatientServiceImpl implements PatientService{
 
 	@Autowired
 	private DiseaseService diseaseService;
+	
+	@Autowired
+	private PatientService patientService;
+	
+	@Autowired
+	private PrescriptionService prescriptionService;
 	
 	private final KieContainer kieContainer;
 	
@@ -74,8 +81,28 @@ public class PatientServiceImpl implements PatientService{
 	}
 
 	public Message getAdiction() {
-		// TODO Auto-generated method stub
-		return null;
+		KieSession kieSession = kieContainer.newKieSession("reportsSession");
+	    Long nowGlobal = System.currentTimeMillis();
+	    kieSession.setGlobal("nowGlobal", nowGlobal);
+	    Set<String> stringSet = new HashSet<String>();
+	    kieSession.setGlobal("stringSet", stringSet);
+	    
+	    // Ubacujem sve pacijente i prepisane lekove
+	    List<Patient> patients = patientService.findAll();
+	    for(Patient p : patients) 
+	    	kieSession.insert(p);
+	    List<Prescription> prescriptions = prescriptionService.findAll();
+	    for(Prescription p : prescriptions)
+	    	kieSession.insert(p);
+	    
+	    kieSession.getAgenda().getAgendaGroup("reports").setFocus();
+	    kieSession.fireAllRules();
+        kieSession.dispose();
+	    Message customMessage = new Message();
+        for(String s: stringSet) {
+        	customMessage.message += s + ",";
+        }
+	    return customMessage; 
 	}
 
 	public Message getImmunity() {

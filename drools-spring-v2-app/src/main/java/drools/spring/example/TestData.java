@@ -13,6 +13,8 @@ import drools.spring.example.medicine.MedicineService;
 import drools.spring.example.medicine.MedicineType;
 import drools.spring.example.patient.Patient;
 import drools.spring.example.patient.PatientService;
+import drools.spring.example.prescription.Prescription;
+import drools.spring.example.prescription.PrescriptionService;
 import drools.spring.example.symptom.Symptom;
 import drools.spring.example.symptom.SymptomService;
 import drools.spring.example.symptom.SymptomType;
@@ -38,6 +40,8 @@ public class TestData {
 	@Autowired
 	private MedicineService medicineService;
 	
+	@Autowired
+	private PrescriptionService prescriptionService;
 	
 	@PostConstruct
 	private void init() {
@@ -50,16 +54,23 @@ public class TestData {
 		user2.setUserType(UserType.DOCTOR);
 		userService.register(user2);
 		
-		User user3 = new User("admin@admin", "qweqwe", "Han", "Solo", "Corellia", null);
-		user3.setUserType(UserType.SYSADMIN);
+		User user3 = new User("ccc@ccc", "qweqwe", "Richard", "Stallman", "New York", null);
+		user3.setUserType(UserType.DOCTOR);
 		userService.register(user3);
+		
+		User user4 = new User("admin@admin", "qweqwe", "Han", "Solo", "Corellia", null);
+		user4.setUserType(UserType.SYSADMIN);
+		userService.register(user4);
 		
 		Patient p1 = new Patient("Nebojsa","Horvat","penicilin,taurin");
 		patientService.add(p1);
 		Patient p2 = new Patient("Borislav","Puzic","vitamin");
 		patientService.add(p2);
+		Patient p3 = new Patient("Marko","Trivunovic","zeleno");
+		patientService.add(p3);
 		
 		Disease disease1 = new Disease(p1, DiseaseType.GROZNICA, 1528892785341L, 1.0, 7L, 1,null);
+		disease1.setTimeStamp(1529163882000L);
 		diseaseService.add(disease1);
 		
 		Disease disease2 = new Disease(p1, DiseaseType.HIPERTENZIJA, 1262304000000L, 1.0, 7L, 1,null);
@@ -81,6 +92,18 @@ public class TestData {
 			Disease disease = new Disease(p2, DiseaseType.UPALA_KRAJNIKA
 					, 1529108027000L, 1, 3L, 1, user1);
 			diseaseService.add(disease);
+		}
+		
+		for(int i=0 ;i < 6 ;i ++) {
+			Prescription p = new Prescription(p3, disease1, user1, m2);
+			if(i%3 == 0)
+				p.setUser(user1);
+			else if(i%3 == 1)
+				p.setUser(user2);
+			else if(i%3 == 2)
+				p.setUser(user3);
+			
+			prescriptionService.add(p);
 		}
 
 	}
