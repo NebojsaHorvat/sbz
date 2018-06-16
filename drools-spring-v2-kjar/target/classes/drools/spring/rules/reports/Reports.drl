@@ -14,10 +14,8 @@ import drools.spring.example.medicine.Message;
 
 //declare any global variables here
 
-global Message customMessage;
 global Long nowGlobal;
-global java.util.List diseasesFount;
-
+global java.util.Set stringSet;
 
 rule "Pacijenti sa hronicnim oboljenjima "
 agenda-group "reports"
@@ -38,23 +36,16 @@ agenda-group "reports"
         )
     	
     then
-    	boolean print = true;
-    	for(Object di : diseasesFount){
-    		Disease d = (Disease) di;
-    		if( d.getPatient() == $p && d.getDiseaseType() == $d.getDiseaseType()){
-    			print = false;
-    		}
-    	}
-    	if(print){
+    	
 	    	System.out.println("Pacijent "+ $p.getName()+ " " + $p.getSurname() +
 	    		" verovatno hornicno boluje od " + $d.getDiseaseType());
-	    	customMessage.message = customMessage.message + ","+
+
+	    	stringSet.add(
 	    	"Pacijent "+ $p.getName()+ " "+ $p.getSurname() +
 	    	" verovatno hornicno boluje od " + $d.getDiseaseType()+
-	    	" zato sto je bolovao od nje " + $n+" puta u poslednjih 2 god";
-	    	
-	    	diseasesFount.add($d);
-    	}
+	    	" zato sto je bolovao od nje " + $n+" puta u poslednjih 2 god"
+	    	);
+    	
         
 end
 

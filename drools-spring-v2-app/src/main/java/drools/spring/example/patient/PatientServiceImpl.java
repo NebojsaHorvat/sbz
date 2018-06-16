@@ -1,11 +1,10 @@
 package drools.spring.example.patient;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import org.kie.api.KieBaseConfiguration;
-import org.kie.api.KieServices;
-import org.kie.api.conf.EventProcessingOption;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,12 +55,10 @@ public class PatientServiceImpl implements PatientService{
 	public Message getChronical() {
 	    
 		KieSession kieSession = kieContainer.newKieSession("reportsSession");
-		Message customMessage = new Message();
-	    kieSession.setGlobal("customMessage", customMessage);
 	    Long nowGlobal = System.currentTimeMillis();
 	    kieSession.setGlobal("nowGlobal", nowGlobal);
-	    List<Disease> diseasesFount = new ArrayList<Disease>();
-	    kieSession.setGlobal("diseasesFount", diseasesFount);
+	    Set<String> stringSet = new HashSet<String>();
+	    kieSession.setGlobal("stringSet", stringSet);
 	    
 	    List<Disease> diseases = diseaseService.findAll();
 	    for(Disease d: diseases)
@@ -69,6 +66,10 @@ public class PatientServiceImpl implements PatientService{
 	    kieSession.getAgenda().getAgendaGroup("reports").setFocus();
 	    kieSession.fireAllRules();
         kieSession.dispose();
+        Message customMessage = new Message();
+        for(String s: stringSet) {
+        	customMessage.message += s + ",";
+        }
 	    return customMessage;
 	}
 
