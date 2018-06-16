@@ -32,7 +32,7 @@ public class Patient {
 
 	private String alergicSubstances;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "PATIENT_MEDICINE",

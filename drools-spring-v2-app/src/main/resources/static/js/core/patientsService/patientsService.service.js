@@ -9,6 +9,9 @@ angular.module('core.patients')
 		this.getOne = (id) => {
 			return $http.get('/api/patients/'+id);
 		};
+		this.add = (patient) => {
+			return $http.post('/api/patients',patient);
+		};
 		this.getChronical = () => {
 			return $http.get('/api/patients/chronical');
 		};

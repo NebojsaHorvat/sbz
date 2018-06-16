@@ -34,3 +34,63 @@
 			</div>
 	</div>
 </div>
+
+<h2>Dodaj pacijenta: </h2>
+
+<div class="row justify-content-md-left">
+	<form name="patientForm" >
+	
+	<div class="form-group row">
+    <label for="nameInput">Ime:</label>
+	<input type="text"
+		id="nameInput"
+		class="form-group form-control"
+		placeholder="Ime"
+		ng-model="$ctrl.patient.name"
+		ng-required="true"/>
+	</div>
+	
+	<div class="form-group row">
+    <label for="nameInput">Prezime:</label>
+	<input type="text"
+		id="nameInput"
+		class="form-group form-control"
+		placeholder="Prezime"
+		ng-model="$ctrl.patient.surname"
+		ng-required="true"/>
+	</div>
+	
+	<div class="form-group row">
+    <label for="nameInput">Supstance na koje je alergican(razdovjene zarezom):</label>
+	<input type="text"
+		id="nameInput"
+		class="form-group form-control"
+		placeholder="Supstance"
+		ng-model="$ctrl.patient.alergicSubstances"
+		ng-required="true"/>
+	</div>
+	
+	<h2> Alergican je na: </h2>
+<div class="row align-items-stretch">
+	<div ng-repeat="medicine in $ctrl.medicines" class="card mx-md-1 col-lg-4 col-md-6">
+		<div class="card-body">
+			<h3 class="card-title">
+				{{medicine.name}}
+			</h3>
+			<div class="card-subtitle mb-2 text-muted">
+				Tip = {{medicine.medicineType}}<br>
+			</div>
+			<input id="checkBox" type="checkbox" ng-model="choice" ng-change="$ctrl.changeStatus(choice,medicine)">
+				
+		</div>
+	</div>
+</div>
+	<button class="btn btn-custom"
+		ng-click="patientForm.$valid && $ctrl.send()">Send
+	</button>
+	<p>
+		{{$ctrl.status}}
+	</p>
+	</form>
+	
+</div>
