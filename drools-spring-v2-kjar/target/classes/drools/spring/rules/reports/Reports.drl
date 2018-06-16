@@ -76,8 +76,54 @@ agenda-group "reports"
     
     	stringSet.add(
 	    	"Pacijent "+ $p.getName()+ " "+ $p.getSurname() +
-	    	" je verovatno zavisan od antibiotika "+
+	    	" je verovatno zavisan od analgetika "+
 	    	" zato sto ga je u 6 meseci primion " + $listOfPrescriptions.size()+" puta "
+	    	); 
+    
+end
+
+
+
+rule "Slab imunitet "
+agenda-group "reports"
+    when
+    	$p :Patient()
+    	$listOfPrescriptions: List() from collect(
+        	Prescription(
+        		$p == patient,
+        		medicine.medicineType == MedicineType.ANTIBIOTIK,
+        		disease.timeStamp  > (nowGlobal - 12*30*24*36000*1000)
+        	)
+        )
+    	eval($listOfPrescriptions.size() >= 10)
+    	
+    	$setDisease: Set() from accumulate(
+            Prescription($d : disease) from $listOfPrescriptions,
+            init(Set disease = new HashSet();),
+            action(disease.add($d);),
+            result(disease)
+        )
+        eval ($setDisease.size() >= 2)
+        
+        // Treba da nema ni jedno dodavanje leka a da nije antibiotik
+        $listOfPrescriptionsWithoutAntibiotik: List() from collect(
+        	Prescription(
+        		$p == patient,
+        		medicine.medicineType != MedicineType.ANTIBIOTIK,
+        		disease.timeStamp  > (nowGlobal - 12*30*24*36000*1000)
+        	)
+        )
+    	
+    	eval($listOfPrescriptionsWithoutAntibiotik.size() == 0)
+    	
+    then
+    
+        System.out.println("SLAB IMUNINTET "+  $p.getSurname() + " broj: "+ $listOfPrescriptions.size() );
+    
+    	stringSet.add(
+	    	"Pacijent "+ $p.getName()+ " "+ $p.getSurname() +
+	    	" verovatno ima oslabljen imunitet "+
+	    	" zato sto ga je u 12 meseci primion antibiotik " + $listOfPrescriptions.size()+" puta "
 	    	); 
     
 end

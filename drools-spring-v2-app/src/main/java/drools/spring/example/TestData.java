@@ -68,12 +68,17 @@ public class TestData {
 		patientService.add(p2);
 		Patient p3 = new Patient("Marko","Trivunovic","zeleno");
 		patientService.add(p3);
+		Patient p4 = new Patient("Luka","Solaja","zeleno,zeleno");
+		patientService.add(p4);
+
+		patientService.add(p3);
 		
 		Disease disease1 = new Disease(p1, DiseaseType.GROZNICA, 1528892785341L, 1.0, 7L, 1,null);
 		disease1.setTimeStamp(1529163882000L);
 		diseaseService.add(disease1);
 		
 		Disease disease2 = new Disease(p1, DiseaseType.HIPERTENZIJA, 1262304000000L, 1.0, 7L, 1,null);
+		disease2.setTimeStamp(1529163882000L);
 		diseaseService.add(disease2);
 		
 		for(int i = 0; i < 12 ; i++) {
@@ -95,13 +100,22 @@ public class TestData {
 		}
 		
 		for(int i=0 ;i < 6 ;i ++) {
-			Prescription p = new Prescription(p3, disease1, user1, m2);
+			Prescription p = new Prescription(p3, disease1, user1, m1);
 			if(i%3 == 0)
 				p.setUser(user1);
 			else if(i%3 == 1)
 				p.setUser(user2);
 			else if(i%3 == 2)
 				p.setUser(user3);
+			
+			prescriptionService.add(p);
+		}
+		
+		for(int i=0 ;i < 15 ;i ++) {
+			Prescription p = new Prescription(p4, disease1, user1, m1);
+			if(i >8) {
+				p.setDisease(disease2);
+			}
 			
 			prescriptionService.add(p);
 		}

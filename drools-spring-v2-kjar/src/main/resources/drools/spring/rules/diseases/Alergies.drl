@@ -27,12 +27,8 @@ agenda-group "checkAlergies"
 		for(String patientS :patientSubstances) {
 			for(String medicineS: medicineSupstances) {
 				if(patientS.contains(medicineS)) {
-					if(retMessage.equals(""))
-						retMessage.message = "Patient is alergic to "+ medicineS +" in " +$m.getName();
-					else {
-						retMessage.message += ",";
-						retMessage.message += "Patient is alergic to "+ medicineS +" in " +$m.getName();
-					}
+					
+					retMessage.message = retMessage.message + "Patient is alergic to "+ medicineS +" in " +$m.getName() +",";
 					break;
 				}
 			}
@@ -48,10 +44,7 @@ agenda-group "checkAlergies"
     	
     then
 		System.out.println("Usao u alergija na lekove"+$m.getName());
-		if(retMessage.equals(""))
-			retMessage.message = "Patient is alergic to "+ $m.getName();
-		else {
-			retMessage.message += ",";
-			retMessage.message += "Patient is alergic to "+ $m.getName();
-		}
+		
+		retMessage.message = retMessage.message +"Patient is alergic to "+ $m.getName() + ",";
+		
 end
