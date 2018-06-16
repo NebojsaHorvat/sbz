@@ -15,25 +15,22 @@ global Long now1
 
 rule "Hipertenzija"
     when
-        accumulate(
+        $c:Number (intValue >= 4) from accumulate(
         	Symptom( 
         	symptomType == SymptomType.VISOK_PRITISAK &&
         	(timeStamp > (now1 - 6*30*24*3600*10000) )
         	
-        	),$c: count(1)
+        	), count(1)
         )
     then
-    	if($c >= 10){
-    		System.out.println("HIPERTENZIJA");
-	    	Disease disease = new Disease();
-	    	disease.setDiseaseGroup(2);
-	    	disease.setDiseaseType(DiseaseType.HIPERTENZIJA);
-	    	disease.setChance(1.0);
-	    	disease.setNumberOfSymptoms(1L);
-	    	
-	        diseaseList.add(disease);
-	    }
+		System.out.println("HIPERTENZIJA");
+    	Disease disease = new Disease();
+    	disease.setDiseaseGroup(2);
+    	disease.setDiseaseType(DiseaseType.HIPERTENZIJA);
+    	disease.setChance(1.0);
+    	disease.setNumberOfSymptoms(1L);
     	
+        diseaseList.add(disease);
 end
 
 rule "Dijabetes"
