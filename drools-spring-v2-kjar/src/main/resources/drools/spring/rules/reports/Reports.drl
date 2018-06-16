@@ -16,6 +16,7 @@ import drools.spring.example.medicine.Message;
 
 global Message customMessage;
 global Long nowGlobal;
+global java.util.List diseasesFount;
 
 
 rule "Pacijenti sa hronicnim oboljenjima "
@@ -30,19 +31,29 @@ agenda-group "reports"
     	)
     	
     	$n: Number (intValue > 5) from accumulate(
-        	Disease( $dt == diseaseType,
+        	$dis:Disease( $dt == diseaseType,
         		$p == patient,
         		timeStamp  > (nowGlobal - 2*356*24*3600*1000)
         	), count(1)
         )
     	
     then
-    	
-    	System.out.println("Pacijent "+ $p.getName()+ " " + $p.getSurname() +
-    		" verovatno hornicno boluje od " + $d.getDiseaseType());
-    	customMessage.message = customMessage.message + ","+
-    	"Pacijent "+ $p.getName()+ " "+ $p.getSurname() +
-    	" verovatno hornicno boluje od " + $d.getDiseaseType()+
-    	" zato sto je bolovao od nje " + $n+" puta u poslednjih 2 god";
+    	boolean print = true;
+    	for(Object di : diseasesFount){
+    		Disease d = (Disease) di;
+    		if( d.getPatient() == $p && d.getDiseaseType() == $d.getDiseaseType()){
+    			print = false;
+    		}
+    	}
+    	if(print){
+	    	System.out.println("Pacijent "+ $p.getName()+ " " + $p.getSurname() +
+	    		" verovatno hornicno boluje od " + $d.getDiseaseType());
+	    	customMessage.message = customMessage.message + ","+
+	    	"Pacijent "+ $p.getName()+ " "+ $p.getSurname() +
+	    	" verovatno hornicno boluje od " + $d.getDiseaseType()+
+	    	" zato sto je bolovao od nje " + $n+" puta u poslednjih 2 god";
+	    	
+	    	diseasesFount.add($d);
+    	}
         
 end

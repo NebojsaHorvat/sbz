@@ -1,5 +1,6 @@
 package drools.spring.example.patient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.kie.api.KieBaseConfiguration;
@@ -58,6 +59,8 @@ public class PatientServiceImpl implements PatientService{
 	    kieSession.setGlobal("customMessage", customMessage);
 	    Long nowGlobal = System.currentTimeMillis();
 	    kieSession.setGlobal("nowGlobal", nowGlobal);
+	    List<Disease> diseasesFount = new ArrayList<Disease>();
+	    kieSession.setGlobal("diseasesFount", diseasesFount);
 	    
 	    List<Disease> diseases = diseaseService.findAll();
 	    for(Disease d: diseases)
